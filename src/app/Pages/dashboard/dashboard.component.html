@@ -1,11 +1,20 @@
-<div class="dashboard w-full">
+<div class="dashboard w-full h-full">
     <div class="header w-full">
         <app-navbar />
 
         <div class="stats"></div>
     </div>
 
-    <div class="content w-full">
-        <p>dashboard works!</p>
+    <div class="content w-full h-auto">
+        <section style="margin-bottom: 45px;">
+            <h1 class="text-xl font-semibold" style="margin-bottom: 20px;">Listes des utilisateurs</h1>
+            <app-user-list />
+        </section>
+
+
+        <section style="margin-bottom: 45px;">
+            <h1 class="text-xl font-semibold" style="margin-bottom: 20px;">Listes des drivers</h1>
+            <app-supplier-list />
+        </section>
     </div>
 </div>

@@ -25,8 +25,17 @@ export class UserService {
     })
   }
 
-  getUserInfo(): Observable<UserResponse> {
-    return this.http.get<UserResponse>(`${environment.apiUrl}${this.endpoint}/${this.currentUser.user.id}`, {
+  getUserInfo(): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}${this.endpoint}/${this.currentUser.user.id}`, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${this.currentUser.access_token}`
+      }
+    })
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}${this.endpoint}`, {
       headers: {
         'content-type': 'application/json',
         'Authorization': `Bearer ${this.currentUser.access_token}`
