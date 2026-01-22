@@ -1,14 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
-import { UserFormComponent } from '../../shared/compoments/user-form/user-form.component';
+import { NavbarComponent } from '../../shared/compoments/navbar/navbar.component';
+import { UserListComponent } from '../../shared/compoments/user-list/user-list.component';
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, UserFormComponent],
+  imports: [CommonModule, UserListComponent, NavbarComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
+  title = signal<string>('Utilisateurs');
 
+  private router = inject(Router);
+
+  constructor() { }
+
+  ngOnInit(): void {
+    
+  }
+
+  fecthDriversList() {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
+  navigateTo(path: string) {
+    this.router.navigate([`/${path}`]);
+  }
 }
