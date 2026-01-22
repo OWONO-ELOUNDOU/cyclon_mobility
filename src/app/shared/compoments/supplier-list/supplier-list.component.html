@@ -1,1 +1,38 @@
-<p>supplier-list works!</p>
+<div class="table-container w-full">
+    <p-table [value]="driversList()">
+        <ng-template #header>
+            <tr>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Nom</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Téléphone</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Email</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">date de Naissance</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Adresse</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Numéro CNI</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Expiration CNI</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Expiration Permis</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Localisation</th>
+                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">action</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-user>
+            <tr>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.fullName }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.phone }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.email }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.birthDate }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.adress }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.cniNumber }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.cniExpireDate }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.driverLicenceExpireDate }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.location }}</td>
+                <td class="text-xs text-gray-600 font-semibold cursor-pointer" style="padding: 20px 0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" (click)="onDelete(user.id)" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash cursor-pointer">
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+                        <path d="M3 6h18"/>
+                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

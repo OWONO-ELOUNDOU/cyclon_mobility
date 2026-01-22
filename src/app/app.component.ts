@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 
 // Import de composants
@@ -6,10 +8,16 @@ import { SidebarComponent } from './shared/compoments/sidebar/sidebar.component'
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SidebarComponent],
+  imports: [RouterOutlet, SidebarComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'cyclon_mobility';
+
+  private router = inject(Router)
+
+  isAuthorizeRoute() {
+    return this.router.url === '/login';
+  }
 }

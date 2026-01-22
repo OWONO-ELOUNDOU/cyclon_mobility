@@ -1,1 +1,21 @@
-<p>suppliers works!</p>
+<div class="drivers-container w-full">
+    <div class="header w-full flex items-center justify-between" style="margin-bottom: 60px;">
+        <div class="current-path">
+            <app-navbar [pageTitle]="title()" />
+        </div>
+        <div class="w-[150px]">
+            <button class="w-full h-[30px] flex items-center justify-center gap-1 text-xs text-white font-semibold rounded-md bg-blue-600 cursor-pointer" (click)="navigateTo('driver/form')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
+                    <path d="M5 12h14"/>
+                    <path d="M12 5v14"/>
+                </svg>
+                Ajouter Driver
+            </button>
+        </div>
+    </div>
+
+    <div class="users-list w-full">
+        <h3 class="text-xl text-gray-700 font-semibold" style="margin-bottom: 20px;">Liste des drivers</h3>
+        <app-supplier-list />
+    </div>
+</div>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 // Import de service
-import { UserResponse } from '../../models/user.models';
+import { User, UserResponse } from '../../models/user.models';
 import { UserService } from '../../../services/User/user.service';
 import { AuthenticationService } from '../../../services/Authentication/authentication.service';
 
@@ -20,7 +20,7 @@ export class SidebarComponent implements OnInit {
   private authService = inject(AuthenticationService);
 
   isLoading = signal<boolean>(false);
-  currentUser = signal<UserResponse | null>(null);
+  currentUser = signal<User | null>(null);
 
   constructor() { }
 
@@ -34,6 +34,7 @@ export class SidebarComponent implements OnInit {
         next: (data) => {
           console.log(data);
           this.currentUser.set(data);
+          localStorage.setItem('connectedUser', JSON.stringify(data));
         },
         error: (error) => {
           console.log(error);
