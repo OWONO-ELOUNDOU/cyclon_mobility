@@ -1,0 +1,29 @@
+<div class="login-container">
+    <div class="login-content w-[400px] h-auto p-4 border border-gray-300 shadow-sm rounded-md" style="padding: 20px;">
+        <h1 class="text-2xl font-semibold">Cyclon Mobility</h1>
+        <p class="text-sm font-semibold" style="margin: 15px 0;">Connexion à l'interface administrateur</p>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full flex items-start justify-start flex-col gap-4">
+            <div class="input-field w-full flex items-start justify-start flex-col gap-1">
+                <label for="phone" class="text-xs text-gray-500 font-semibold">
+                    Numéro de téléphone
+                </label>
+                <input type="tel" formControlName="phone" class="w-full text-xs font-semibold border border-gray-300 rounded-md" style="padding: 7px;" placeholder="ex. 699999999">
+                <div *ngIf="loginForm.get('phone')?.invalid && (loginForm.get('phone')?.touched || loginForm.get('phone')?.dirty)" class="text-xs text-red-600">Numéro requis</div>
+            </div>
+            <div class="input-field w-full flex items-start justify-start flex-col gap-1">
+                <label for="password" class="text-xs text-gray-500 font-semibold">
+                    Mot de passe
+                </label>
+                <input type="password" formControlName="password" class="w-full text-xs font-semibold border border-gray-300 rounded-md" style="padding: 7px;">
+                <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)" class="text-xs text-red-600">mot de passe requis</div>
+            </div>
+            <button type="submit" class="w-full text-center text-xs text-white font-semibold bg-indigo-700 rounded-md cursor-pointer" style="padding: 10px 0;">
+                @if (isLoading()) {
+                    Connexion en cours...
+                } @else {
+                    Connexion
+                }
+            </button>
+        </form>
+    </div>
+</div>

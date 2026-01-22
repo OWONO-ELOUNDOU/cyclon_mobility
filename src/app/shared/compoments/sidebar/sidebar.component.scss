@@ -1,0 +1,26 @@
+.sidebar-container {
+    padding: 10px;
+
+    .row-1 {
+        .logo {
+            padding-bottom: 10px;
+        }
+        .navlinks {
+            li {
+                padding: 10px;
+                transition: all 300ms ease-in;
+
+                &:hover {
+                    background-color: lightgray;
+                }
+            }
+        }
+    }
+
+    .row-2 {
+        p { margin-bottom: 10px; }
+        button {
+            padding: 5px 0;
+        }
+    }
+}
