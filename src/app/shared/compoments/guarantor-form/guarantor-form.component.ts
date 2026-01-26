@@ -19,7 +19,7 @@ export class GuarantorFormComponent implements OnInit {
   private guarantorService = inject(GuarantorService);
 
   // Déclaration de variables
-  driverId = input<number>(0);
+  driverId = signal<number>(0);
   title = signal<string>('Garant');
   isLoading = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
@@ -35,13 +35,13 @@ export class GuarantorFormComponent implements OnInit {
     phone: new FormControl('', Validators.required),
     profilePicture: new FormControl(''),
     guarandAffiliation: new FormControl('', Validators.required),
-    driver_id: new FormControl(1)
+    driver_id: new FormControl(0)
   });
 
   constructor() { }
 
   ngOnInit(): void {
-    //this.driverId.set(localStorage.getItem('driverId') ? Number(localStorage.getItem('driverId')) : 0);
+    this.driverId.set(localStorage.getItem('driverId') ? Number(localStorage.getItem('driverId')) : 0);
   }
 
   get f() {
@@ -54,6 +54,9 @@ export class GuarantorFormComponent implements OnInit {
       return;
     }
 
+    this.guarantorForm.patchValue({
+      driver_id: this.driverId()
+    });
     console.log(this.guarantorForm.value);
     
     try {

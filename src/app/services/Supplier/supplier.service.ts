@@ -33,4 +33,13 @@ export class SupplierService {
       }
     })
   }
+
+  getDriverDetails(id: number): Observable<SupplierResponse> {
+    return this.http.get<SupplierResponse>(`${environment.apiUrl}${this.endpoint}/${id}`, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${this.currentUser.access_token}`
+      }
+    })
+  }
 }

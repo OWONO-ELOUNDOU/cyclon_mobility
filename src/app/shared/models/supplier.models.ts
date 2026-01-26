@@ -39,6 +39,8 @@ export interface SupplierResponse {
     driverLicenceExpireDate: string;
     adress: string;
     email: string;
+    files: any[];
+    carType: string;
     phone: string;
     isAdressConfirmation: boolean;
     isNeigboorhoodConfirmation: boolean;
