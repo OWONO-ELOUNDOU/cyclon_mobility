@@ -14,27 +14,47 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./Pages/dashboard/dashboard.component').then(c => c.DashboardComponent)
     },
     {
         path: 'users',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./Pages/users/users.component').then(c => c.UsersComponent)
     },
     {
         path: 'user/form',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./shared/compoments/user-form/user-form.component').then(c => c.UserFormComponent)
     },
     {
         path: 'drivers',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./Pages/suppliers/suppliers.component').then(c => c.SuppliersComponent)
     },
     {
         path: 'driver/form',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./shared/compoments/supplier-form/supplier-form.component').then(c => c.SupplierFormComponent)
     },
+    {
+        path: 'driver/details',
+        // canActivate: [authGuard],
+        loadComponent: () => import('./shared/compoments/driver-details/driver-details.component').then(c => c.DriverDetailsComponent)
+    },
+    {
+        path: 'guarantor/form',
+        // canActivate: [authGuard],
+        loadComponent: () => import('./shared/compoments/guarantor-form/guarantor-form.component').then(c => c.GuarantorFormComponent)
+    },
+    {
+        path: 'guarantors',
+         canActivate: [authGuard],
+        loadComponent: () => import('./Pages/guarantors/guarantors.component').then(c => c.GuarantorsComponent)
+    },
+    {
+        path: 'file-types',
+         canActivate: [authGuard],
+        loadComponent: () => import('./Pages/file-types/file-types.component').then(c => c.FileTypesComponent)
+    }
 ];
