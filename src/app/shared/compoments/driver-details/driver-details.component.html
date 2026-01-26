@@ -1,0 +1,98 @@
+<div class="driver-details-container">
+    <div class="header">
+        <app-navbar [pageTitle]="title()" />
+    </div>
+    <div class="profile-picture">
+        <img src="images/logo.png" width="150px" height="150px" class="border border-gray-300 rounded-full" alt="">
+    </div>
+    <div class="personal-info">
+        <h3>Informations Personnelles</h3>
+
+        <div class="infos w-full flex items-start justify-between flex-wrap gap-3">
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Nom Complet</label>
+                <p class="text-sm"><strong>{{ driver()?.fullName }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Numéro de téléphone</label>
+                <p class="text-sm"><strong>{{ driver()?.phone }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Adresse mail</label>
+                <p class="text-sm"><strong>{{ driver()?.email }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Date de naissance</label>
+                <p class="text-sm"><strong>{{ driver()?.birthDate }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Adresse</label>
+                <p class="text-sm"><strong>{{ driver()?.adress }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Localisation</label>
+                <p class="text-sm"><strong>{{ driver()?.location }}</strong></p>
+            </div>
+        </div>
+    </div>
+    <div class="cni-info">
+        <h3>Informations Carte Nationale Identité (CNI)</h3>
+
+        <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">CNI</label>
+                <p class="text-sm"><strong>{{ driver()?.haveCni ? 'Oui' : 'Non' }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Numéro de CNI</label>
+                <p class="text-sm"><strong>{{ driver()?.cniNumber }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Date expiration CNI</label>
+                <p class="text-sm"><strong>{{ driver()?.cniExpireDate }}</strong></p>
+            </div>
+        </div>
+    </div>
+    <div class="cni-info">
+        <h3>Informations Permis de conduire</h3>
+
+        <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Permis de conduire</label>
+                <p class="text-sm"><strong>{{ driver()?.haveDriverLicence ? 'Oui' : 'Non' }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Débitér les frais pour le permis</label>
+                <p class="text-sm"><strong>{{ driver()?.driverLicenceDebit ? 'Oui' : 'Non' }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Date expiration Permis</label>
+                <p class="text-sm"><strong>{{ driver()?.driverLicenceExpireDate }}</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cni-info">
+        <h3>Informations garant et autres</h3>
+
+        <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Garant</label>
+                <p class="text-sm"><strong>{{ driver()?.haveGuarantor ? 'Oui' : 'Non' }}</strong></p>
+                <button *ngIf="!driver()?.haveGuarantor" (click)="navigateTo('guarantor/form')" class="text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 15px; margin-top: 10px;">Joindre un garant</button>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Driver validé</label>
+                <p class="text-sm"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Test driver validé</label>
+                <p class="text-sm"><strong>{{ driver()?.isDriverValidatedTest ? 'Oui' : 'Non' }}</strong></p>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Driver vérifié</label>
+                <p class="text-sm"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>

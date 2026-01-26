@@ -38,6 +38,11 @@ export const routes: Routes = [
         loadComponent: () => import('./shared/compoments/supplier-form/supplier-form.component').then(c => c.SupplierFormComponent)
     },
     {
+        path: 'driver/details',
+        // canActivate: [authGuard],
+        loadComponent: () => import('./shared/compoments/driver-details/driver-details.component').then(c => c.DriverDetailsComponent)
+    },
+    {
         path: 'guarantor/form',
         // canActivate: [authGuard],
         loadComponent: () => import('./shared/compoments/guarantor-form/guarantor-form.component').then(c => c.GuarantorFormComponent)
