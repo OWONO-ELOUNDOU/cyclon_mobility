@@ -1,0 +1,41 @@
+<div class="card">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <h2>Manage File Types</h2>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <p-button label="New" icon="pi pi-plus" styleClass="p-button-success" (click)="addNew()"></p-button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table [value]="fileTypes" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-fileType>
+      <tr>
+        <td>{{fileType.id}}</td>
+        <td>{{fileType.title}}</td>
+        <td>
+          <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success mr-2" (click)="editFileType(fileType)"></p-button>
+          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-warning" (click)="deleteFileType(fileType)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="displayDialog" [style]="{width: '450px'}" header="File Type Details" [modal]="true" styleClass="p-fluid">
+  <div class="field">
+    <label for="title">Title</label>
+    <input type="text" pInputText id="title" [(ngModel)]="fileType.title" required autofocus />
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" label="Cancel" styleClass="p-button-text" (click)="displayDialog=false"></p-button>
+    <p-button icon="pi pi-check" label="Save" styleClass="p-button-text" (click)="saveFileType()"></p-button>
+  </ng-template>
+</p-dialog>
