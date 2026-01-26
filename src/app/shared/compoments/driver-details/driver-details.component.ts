@@ -6,11 +6,11 @@ import { SupplierResponse } from '../../models/supplier.models';
 import { SupplierService } from '../../../services/Supplier/supplier.service';
 
 import { NavbarComponent } from '../navbar/navbar.component';
-import { GuarantorDetailsComponent } from '../guarantor-details/guarantor-details.component';
+import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
 
 @Component({
   selector: 'app-driver-details',
-  imports: [CommonModule, NavbarComponent, GuarantorDetailsComponent],
+  imports: [CommonModule, NavbarComponent, FileUploaderComponent],
   templateUrl: './driver-details.component.html',
   styleUrl: './driver-details.component.scss'
 })

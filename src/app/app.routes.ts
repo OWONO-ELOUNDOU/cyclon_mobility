@@ -47,4 +47,9 @@ export const routes: Routes = [
         // canActivate: [authGuard],
         loadComponent: () => import('./shared/compoments/guarantor-form/guarantor-form.component').then(c => c.GuarantorFormComponent)
     },
+    {
+        path: 'guarantors',
+        // canActivate: [authGuard],
+        loadComponent: () => import('./Pages/guarantors/guarantors.component').then(c => c.GuarantorsComponent)
+    },
 ];

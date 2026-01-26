@@ -36,72 +36,33 @@
             </div>
         </div>
 
-        <!-- information CNI -->
-        <div class="input-group">
-            <div class="text-sm text-gray-600 font-semibold" style="margin-bottom: 15px;">Possédez-vous une CNI ?</div>
-            <div class="input-box  flex items-start justify-start gap-4">
-                <div class="input-field flex items-center justify-start gap-2">
-                    <input type="checkbox" class="cursor-pointer" width="20" height="20" (click)="checkCNI('oui')" [checked]="hasCNI() === 'oui'">
-                    <label class="text-xs text-gray-600 font-semibold">oui</label>
-                </div>
-                <div class="input-field flex items-center justify-start gap-2">
-                    <input type="checkbox" class="cursor-pointer" width="20" height="20" (click)="checkCNI('non')" [checked]="hasCNI() === 'non'">
-                    <label class="text-xs text-gray-600 font-semibold">non</label>
-                </div>
+        <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="cniNumber" class="text-xs text-gray-600 font-semibold">Numéro CNI <span class="text-red-600">*</span></label>
+                <input type="text" formControlName="cniNumber" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+            </div>
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="cniExpireDate" class="text-xs text-gray-600 font-semibold">Date d'expiration CNI <span class="text-red-600">*</span></label>
+                <input type="date" formControlName="cniExpireDate" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
             </div>
         </div>
 
-        @if (hasCNI() === 'oui') {
-            <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
-                <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
-                    <label for="cniNumber" class="text-xs text-gray-600 font-semibold">Numéro CNI <span class="text-red-600">*</span></label>
-                    <input type="text" formControlName="cniNumber" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
-                </div>
-                <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
-                    <label for="cniExpireDate" class="text-xs text-gray-600 font-semibold">Date d'expiration CNI <span class="text-red-600">*</span></label>
-                    <input type="date" formControlName="cniExpireDate" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
-                </div>
-            </div>
-        }
-
-        <!-- Informations de Permis -->
-        <div class="input-group">
-            <div class="text-sm text-gray-600 font-semibold" style="margin-bottom: 15px;">Possédez-vous un permis de conduire ?</div>
-            <div class="input-box  flex items-start justify-start gap-4">
-                <div class="input-field flex items-center justify-start gap-2">
-                    <input type="checkbox" class="cursor-pointer" width="20" height="20" (click)="checkLicence('oui')" [checked]="hasLicence() === 'oui'">
-                    <label class="text-xs text-gray-600 font-semibold">oui</label>
-                </div>
-                <div class="input-field flex items-center justify-start gap-2">
-                    <input type="checkbox" class="cursor-pointer" width="20" height="20" (click)="checkLicence('non')" [checked]="hasLicence() === 'non'">
-                    <label class="text-xs text-gray-600 font-semibold">non</label>
-                </div>
+        <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="driverLicenceExpireDate" class="text-xs text-gray-600 font-semibold">Date d'expiration du permis <span class="text-red-600">*</span></label>
+                <input type="date" formControlName="driverLicenceExpireDate" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
             </div>
         </div>
 
-        @if (hasLicence() === 'non') {
-            <div class="input-group">
-                <div class="text-sm text-gray-600 font-semibold" style="margin-bottom: 15px;">Acceptez-vous être débité pour les frais du permis ?</div>
-                <div class="input-box  flex items-start justify-start gap-4">
-                    <div class="input-field flex items-center justify-start gap-2">
-                        <input type="checkbox" class="cursor-pointer" width="20" height="20">
-                        <label class="text-xs text-gray-600 font-semibold">oui</label>
-                    </div>
-                    <div class="input-field flex items-center justify-start gap-2">
-                        <input type="checkbox" class="cursor-pointer" width="20" height="20">
-                        <label class="text-xs text-gray-600 font-semibold">non</label>
-                    </div>
+        <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="profileImage" class="text-xs text-gray-600 font-semibold">Photo de profil</label>
+                <input type="file" id="profileImage" formControlName="profileImage" accept="image/*" class="w-full text-xs font-semibold border border-gray-300 rounded-md p-2 cursor-pointer" (change)="onImageSelected($event)">
+                <div *ngIf="imagePreview()" class="w-full h-auto rounded-md overflow-hidden">
+                    <img [src]="imagePreview()" alt="Preview" class="w-full h-auto object-cover">
                 </div>
             </div>
-        } @else {
-            <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
-                <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
-                    <label for="driverLicenceExpireDate" class="text-xs text-gray-600 font-semibold">Date d'expiration du permis <span class="text-red-600">*</span></label>
-                    <input type="date" formControlName="driverLicenceExpireDate" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
-                </div>
-            </div>
-        }
-
+        </div>
 
         <div class="input-group w-full flex items-start justify-between flex-wrap gap-4">
             <button class="w-[300px] flex items-center justify-center gap-2 text-xs text-red-600 font-semibold bg-red-100 rounded-md cursor-pointer" (click)="onCancel()">

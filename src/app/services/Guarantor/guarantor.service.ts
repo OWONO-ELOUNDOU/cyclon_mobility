@@ -42,7 +42,7 @@ export class GuarantorService {
   }
 
   // Récupération de la liste de tous les garants
-  getAllGuarantors(): Observable<GuarantorResponse[]> {
-    return this.http.get<GuarantorResponse[]>(this.apiUrl, { headers: this.headerOptions });
+  getAllGuarantors(): Observable<Guarantor[]> {
+    return this.http.get<Guarantor[]>(this.apiUrl, { headers: this.headerOptions });
   }
 }

@@ -25,6 +25,15 @@ export class UserService {
     })
   }
 
+  uploadProfilePicture(id: number, profilePicture: File): Observable<string> {
+    return this.http.post<string>(`${environment.apiUrl}${this.endpoint}/${id}/profile-picture`, profilePicture, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${this.currentUser.access_token}`
+      }
+    });
+  }
+
   getUserInfo(): Observable<User> {
     return this.http.get<User>(`${environment.apiUrl}${this.endpoint}/${this.currentUser.user.id}`, {
       headers: {
