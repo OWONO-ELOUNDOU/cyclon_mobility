@@ -14,27 +14,32 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./Pages/dashboard/dashboard.component').then(c => c.DashboardComponent)
     },
     {
         path: 'users',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./Pages/users/users.component').then(c => c.UsersComponent)
     },
     {
         path: 'user/form',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./shared/compoments/user-form/user-form.component').then(c => c.UserFormComponent)
     },
     {
         path: 'drivers',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./Pages/suppliers/suppliers.component').then(c => c.SuppliersComponent)
     },
     {
         path: 'driver/form',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         loadComponent: () => import('./shared/compoments/supplier-form/supplier-form.component').then(c => c.SupplierFormComponent)
+    },
+    {
+        path: 'guarantor/form',
+        // canActivate: [authGuard],
+        loadComponent: () => import('./shared/compoments/guarantor-form/guarantor-form.component').then(c => c.GuarantorFormComponent)
     },
 ];

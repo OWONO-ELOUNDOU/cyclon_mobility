@@ -1,0 +1,89 @@
+<div class="guarantor-form-container">
+    <div class="header w-full">
+        <app-navbar [pageTitle]="title()" />
+    </div>
+
+    <form [formGroup]="guarantorForm" (ngSubmit)="onSubmit()" class="w-[630px] h-auto flex items-start justify-start flex-col gap-4">
+        <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="firstName" class="text-xs text-gray-600 font-semibold">Nom <span class="text-red-600">*</span></label>
+                <input type="text" formControlName="firstName" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+                <div *ngIf="guarantorForm.get('firstName')?.invalid && (guarantorForm.get('firstName')?.touched || guarantorForm.get('firstName')?.dirty)" class="text-xs text-red-600">Nom requis</div>
+            </div>
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="lastName" class="text-xs text-gray-600 font-semibold">Prénom <span class="text-red-600">*</span></label>
+                <input type="text" formControlName="lastName" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+                <div *ngIf="guarantorForm.get('lastName')?.invalid && (guarantorForm.get('lastName')?.touched || guarantorForm.get('lastName')?.dirty)" class="text-xs text-red-600">Prénom requis</div>
+            </div>
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="phone" class="text-xs text-gray-600 font-semibold">Téléphone <span class="text-red-600">*</span></label>
+                <input type="tel" formControlName="phone" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+                <div *ngIf="guarantorForm.get('phone')?.invalid && (guarantorForm.get('phone')?.touched || guarantorForm.get('phone')?.dirty)" class="text-xs text-red-600">Téléphone requis</div>
+            </div>
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="birthDate" class="text-xs text-gray-600 font-semibold">Date de naissance <span class="text-red-600">*</span></label>
+                <input type="date" formControlName="birthDate" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+                <div *ngIf="guarantorForm.get('birthDate')?.invalid && (guarantorForm.get('birthDate')?.touched || guarantorForm.get('birthDate')?.dirty)" class="text-xs text-red-600">date de naissance requis</div>
+            </div>
+        </div>
+
+        <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
+            <div class="input-field w-full flex items-start jutify-start flex-col gap-2">
+                <label for="adress" class="text-xs text-gray-600 font-semibold">Adresse <span class="text-red-600">*</span></label>
+                <input type="text" formControlName="adress" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+                <div *ngIf="guarantorForm.get('adress')?.invalid && (guarantorForm.get('adress')?.touched || guarantorForm.get('adress')?.dirty)" class="text-xs text-red-600">Localisation requis</div>
+            </div>
+        </div>
+
+        <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="cniNumber" class="text-xs text-gray-600 font-semibold">Numéro CNI <span class="text-red-600">*</span></label>
+                <input type="text" formControlName="cniNumber" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+                <div *ngIf="guarantorForm.get('cniNumber')?.invalid && (guarantorForm.get('cniNumber')?.touched || guarantorForm.get('cniNumber')?.dirty)" class="text-xs text-red-600">Numéro CNI requis</div>
+            </div>
+            <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
+                <label for="cniExpireDate" class="text-xs text-gray-600 font-semibold">Date d'expiration CNI <span class="text-red-600">*</span></label>
+                <input type="date" formControlName="cniExpireDate" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+                <div *ngIf="guarantorForm.get('cniExpireDate')?.invalid && (guarantorForm.get('cniExpireDate')?.touched || guarantorForm.get('cniExpireDate')?.dirty)" class="text-xs text-red-600">Date d'expiration CNI requise</div>
+            </div>
+        </div>
+
+        <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
+            <div class="input-field w-full flex items-start jutify-start flex-col gap-2">
+                <label for="guarandAffiliation" class="text-xs text-gray-600 font-semibold">Relation avec le driver: <span class="text-red-600">*</span></label>
+                <input type="text" formControlName="guarandAffiliation" class="w-full text-xs font-semibold border border-gray-300 rounded-md" required>
+                <div *ngIf="guarantorForm.get('guarandAffiliation')?.invalid && (guarantorForm.get('guarandAffiliation')?.touched || guarantorForm.get('guarandAffiliation')?.dirty)" class="text-xs text-red-600">relation requise</div>
+            </div>
+        </div>
+
+        <div class="input-group w-full flex items-start justify-between flex-wrap gap-4">
+            <button class="w-[300px] flex items-center justify-center gap-2 text-xs text-red-600 font-semibold bg-red-100 rounded-md cursor-pointer" (click)="onCancel()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+                Annuler
+            </button>
+            <button class="w-[300px] flex items-center justify-center gap-2 text-xs text-green-600 font-semibold bg-green-100 rounded-md cursor-pointer">
+                @if (isLoading()) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-icon lucide-loader">
+                        <path d="M12 2v4"/>
+                        <path d="m16.2 7.8 2.9-2.9"/>
+                        <path d="M18 12h4"/>
+                        <path d="m16.2 16.2 2.9 2.9"/>
+                        <path d="M12 18v4"/>
+                        <path d="m4.9 19.1 2.9-2.9"/>
+                        <path d="M2 12h4"/>
+                        <path d="m4.9 4.9 2.9 2.9"/>
+                    </svg>
+                    Enregistrement en cours...
+                } @else {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                    Enregistrer
+                }
+            </button>
+        </div>
+    </form>
+</div>

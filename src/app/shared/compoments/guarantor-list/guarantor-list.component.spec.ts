@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GarantorFormComponent } from './garantor-form.component';
+import { GuarantorListComponent } from './guarantor-list.component';
 
-describe('GarantorFormComponent', () => {
-  let component: GarantorFormComponent;
-  let fixture: ComponentFixture<GarantorFormComponent>;
+describe('GuarantorListComponent', () => {
+  let component: GuarantorListComponent;
+  let fixture: ComponentFixture<GuarantorListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GarantorFormComponent]
+      imports: [GuarantorListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GarantorFormComponent);
+    fixture = TestBed.createComponent(GuarantorListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
