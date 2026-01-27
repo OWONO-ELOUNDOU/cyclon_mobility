@@ -22,6 +22,7 @@ export class GuarantorFormComponent implements OnInit {
   driverId = signal<number>(0);
   title = signal<string>('Garant');
   isLoading = signal<boolean>(false);
+  imagePreview = signal<string | null>(null);
   errorMessage = signal<string | null>(null);
 
   // Définition du formulaire
@@ -82,6 +83,29 @@ export class GuarantorFormComponent implements OnInit {
 
   navigateTo(path: string) {
     this.router.navigate([`/${path}`]);
+  }
+
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      // Validate file is an image
+      if (!file.type.startsWith('image/')) {
+        alert('Veuillez sélectionner un fichier image valide');
+        return;
+      }
+
+      // Create a preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview.set(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+
+      // Update the form control with the file
+      this.guarantorForm.patchValue({
+        profilePicture: file
+      });
+    }
   }
 
   private markFormGroupTouched(formGroup: FormGroup): void {

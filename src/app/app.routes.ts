@@ -52,4 +52,9 @@ export const routes: Routes = [
         // canActivate: [authGuard],
         loadComponent: () => import('./Pages/guarantors/guarantors.component').then(c => c.GuarantorsComponent)
     },
+    {
+        path: 'quiz',
+        // canActivate: [authGuard],
+        loadComponent: () => import('./Pages/quiz/quiz.component').then(c => c.QuizComponent)
+    },
 ];

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { SupplierResponse } from '../../models/supplier.models';
+import { UserService } from '../../../services/User/user.service';
 import { SupplierService } from '../../../services/Supplier/supplier.service';
 
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -22,7 +23,10 @@ export class DriverDetailsComponent implements OnInit {
   private supplierService = inject(SupplierService);
 
   // Déclaration des variables
+  picture!: File;
   driverId = signal<number>(0);
+  imagePreview = signal<string>('');
+  showFileUploader = signal<boolean>(false);
   isGuarantorVisible = signal<boolean>(false);
   driver = signal<SupplierResponse | null>(null);
 
@@ -49,8 +53,44 @@ export class DriverDetailsComponent implements OnInit {
     }
   }
 
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      // Validate file is an image
+      if (!file.type.startsWith('image/')) {
+        alert('Veuillez sélectionner un fichier image valide');
+        return;
+      }
+
+      // Create a preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview.set(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+
+      // Update the form control with the file
+      this.picture = file;
+    }
+  }
+
+  onUpload() {
+    try {
+      this.supplierService.uploadProfilePicture(this.driverId(), this.picture).subscribe({
+        next: (response) => console.log(response),
+        error: (error) => console.log(error.message)
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   toggleGuarantorVisibility() {
     this.isGuarantorVisible.update(v => !v);
+  }
+
+  toggleUploaderVisibility() {
+    this.showFileUploader.update(v => !v);
   }
 
   navigateTo(path: string) {

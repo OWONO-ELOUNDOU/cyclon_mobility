@@ -1,5 +1,5 @@
 <div class="upload-container w-[250px]">
-    <h3 class="text-sm text-gray-600 font-semibold">Uploader un fichier</h3>
+    <h3 class="text-sm text-gray-600 font-semibold">Changer la photo</h3>
     <form class="w-full" [formGroup]="uploadForm()" (ngSubmit)="onUpload()">
         <div *ngIf="hasCategory()" class="w-full" style="margin-bottom: 10px;">
             <label class="text-xs font-semibold">Catégorie du fichier</label>
@@ -8,7 +8,7 @@
                 <option *ngFor="let category of categories" [value]="category.id">{{ category.label }}</option>
             </select>
         </div>
-        <input type="file" formControlName="file" class="w-full text-xs font-semibold border border-gray-300 rounded-md p-2 cursor-pointer" style="padding: 5px 0; margin-bottom: 10px;" (change)="onImageSelected($event)">
+        <input type="file" class="w-full text-xs font-semibold border border-gray-300 rounded-md p-2 cursor-pointer" style="padding: 5px 0; margin-bottom: 10px;" (change)="onImageSelected($event)">
 
         <div>
             <button type="button" class="w-full text-xs text-white font-semibold bg-blue-600 rounded-md p-2 cursor-pointer" style="padding: 5px 0;" (click)="onUpload()">Uploader</button>

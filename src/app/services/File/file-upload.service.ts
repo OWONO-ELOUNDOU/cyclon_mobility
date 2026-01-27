@@ -1,28 +1,24 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { FileRequest, FileTypeResponse } from '../../shared/models/file-type.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileUploadService {
   private apiUrl = `${environment.apiUrl}/files`; // Adjust based on your API
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
-  uploadProfilePicture(file: File): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
-    const req = new HttpRequest('POST', `${this.apiUrl}/upload/profile-picture`, formData, {
-      reportProgress: true,
-      responseType: 'json'
+
+  uploadfile(userId: number, fileRequest: FileRequest): Observable<FileTypeResponse> {
+    return this.http.post<FileTypeResponse>(this.apiUrl + `/upload/${userId}`, fileRequest, {
+      headers: {
+        'content-type': 'application/json'
+      }
     });
-    return this.http.request(req);
-  }
-
-
-  uploadfile() {
-
   }
 }

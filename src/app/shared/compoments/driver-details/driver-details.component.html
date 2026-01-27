@@ -3,9 +3,11 @@
         <app-navbar [pageTitle]="title()" />
     </div>
     <div class="profile-picture flex items-center justify-start gap-6 mb-6">
-        <img src="images/logo.png" width="150px" height="150px" class="border border-gray-300 rounded-full" alt="">
-        <div>
-            <app-file-uploader />
+        <img [src]="imagePreview() ? imagePreview() : 'images/logo.png'" width="150px" height="150px" class="border border-gray-300 rounded-full" alt="">
+        <div class="form w-[250px]">
+            <h2 class="text-lg font-semibold mb-2" style="margin-bottom: 10px;">Uploader une Image</h2>
+            <input type="file" class="w-full text-xs font-semibold border border-gray-300 cursor-pointer" style="margin-bottom: 10px; padding: 5px;" (change)="onImageSelected($event)">
+            <button class="w-full text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer"d style="padding: 5px 0;" (click)="onUpload()">Uploader la photo</button>
         </div>
     </div>
     <div class="personal-info">
@@ -35,6 +37,22 @@
             <div class="box">
                 <label class="text-xs text-gray-400 font-semibold">Localisation</label>
                 <p class="text-sm"><strong>{{ driver()?.location }}</strong></p>
+            </div>
+        </div>
+    </div>
+    <div class="cni-info">
+        <h3>Informations status du driver</h3>
+
+        <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Vérifié</label>
+                <p class="text-sm"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
+                <button *ngIf="!driver()?.isDriverVerification" class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;">Vérifier le driver</button>
+            </div>
+            <div class="box">
+                <label class="text-xs text-gray-400 font-semibold">Validé</label>
+                <p class="text-sm"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
+                <button *ngIf="!driver()?.isDriverValidated" class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;">Valider le driver</button>
             </div>
         </div>
     </div>
@@ -71,6 +89,30 @@
             <div class="box">
                 <label class="text-xs text-gray-400 font-semibold">Date expiration Permis</label>
                 <p class="text-sm"><strong>{{ driver()?.driverLicenceExpireDate }}</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cni-info">
+        <div class="w-full flex items-start justify-start flex-wrap gap-4">
+            <h3>Documents Joints</h3>
+            <button class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleUploaderVisibility()">Ajouter un document</button>
+        </div>
+        
+        <div class="w-full flex items-center justify-start flex-wrap gap-10">
+            <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+                @if (driver()?.files) {
+                    @for (f of driver()?.files; track $index) {
+                        <div class="box w-[200px] border border-gray-300 rounded-md">
+                            <img [src]="f.path" class="w-full" alt="" srcset="">
+                        </div>
+                    }
+                } @else {
+                    <p class="text-sm">Aucun document joint</p>
+                }
+            </div>
+            <div *ngIf="showFileUploader()">
+                <app-file-uploader [hasCategory]="true" />
             </div>
         </div>
     </div>

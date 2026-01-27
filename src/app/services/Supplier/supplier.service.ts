@@ -34,6 +34,15 @@ export class SupplierService {
     })
   }
 
+  uploadProfilePicture(id: number, file: any): Observable<string> {
+    return this.http.post<string>(`${environment.apiUrl}${this.endpoint}/${id}/profile-picture`, file, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${this.currentUser.access_token}`
+      }
+    });
+  }
+
   getDriverDetails(id: number): Observable<SupplierResponse> {
     return this.http.get<SupplierResponse>(`${environment.apiUrl}${this.endpoint}/${id}`, {
       headers: {

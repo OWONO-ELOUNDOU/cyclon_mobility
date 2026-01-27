@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User, UserResponse } from '../../shared/models/user.models';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../../shared/models/Auth.models';
+import { LoginResponse, ProfilePicture } from '../../shared/models/Auth.models';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +25,8 @@ export class UserService {
     })
   }
 
-  uploadProfilePicture(id: number, profilePicture: File): Observable<string> {
-    return this.http.post<string>(`${environment.apiUrl}${this.endpoint}/${id}/profile-picture`, profilePicture, {
+  uploadProfilePicture(id: number, file: File): Observable<string> {
+    return this.http.post<string>(`${environment.apiUrl}${this.endpoint}/${id}/profile-picture`, file, {
       headers: {
         'content-type': 'application/json',
         'Authorization': `Bearer ${this.currentUser.access_token}`

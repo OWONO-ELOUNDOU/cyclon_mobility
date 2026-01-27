@@ -22,3 +22,8 @@ export interface Rule {
     id: number;
     name: string;
 }
+
+export interface ProfilePicture {
+    file: File,
+    categoryFile?: 'license' | 'insurance' | 'registration' | 'inspection' | 'profile';
+}

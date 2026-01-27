@@ -1,10 +1,11 @@
-export interface FileType {
-  title: string;
+export interface FileRequest {
+  file: File;
+  categoryFile: string;
 }
 
 export interface FileTypeResponse {
   id: number;
-  title: string;
-  createdAt?: string;
-  updatedAt?: string;
+  fileName: string;
+  userId: number;
+  categoryFile: string;
 }
