@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Quiz, QuizResponse } from '../../shared/models/quiz.models';
+import { Quiz, QuizResponse, userQuiz } from '../../shared/models/quiz.models';
 import { LoginResponse } from '../../shared/models/Auth.models';
 
 @Injectable({
@@ -43,5 +43,25 @@ export class QuizService {
   // Supprimer un quiz par son ID
   deleteQuiz(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.headerOptions });
+  }
+
+  // Créer un quiz utilisateur
+  createUserQuiz(userQuiz: userQuiz): Observable<userQuiz> {
+    return this.http.post<userQuiz>(`${this.apiUrl}-user`, userQuiz, { headers: this.headerOptions });
+  }
+
+  // Supprimer un quiz utilisateur
+  deleteUserQuiz(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.headerOptions })
+  }
+
+  // Récupérer les quiz créés par un utilisateur spécifique
+  getQuizzesByUser(userId: number): Observable<userQuiz[]> {
+    return this.http.get<userQuiz[]>(`${this.apiUrl}-user/${userId}`, { headers: this.headerOptions });
+  }
+
+  // Récupérer tous les quiz des utilisateurs
+  getAllUserQuizzes(): Observable<userQuiz[]> {
+    return this.http.get<userQuiz[]>(`${this.apiUrl}-user`, { headers: this.headerOptions });
   }
 }

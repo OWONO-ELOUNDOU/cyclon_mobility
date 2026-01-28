@@ -95,5 +95,8 @@
                 }
             </button>
         </div>
+        <div *ngIf="hasMessage()" class="input-group w-[450px] flex items-start justify-between flex-wrap gap-4" style="margin-top: 20px;">
+            <app-toast-message [state]="state()" [message]="errorMessage()" />
+        </div>
     </form>
 </div>

@@ -4,13 +4,20 @@
         <button class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" (click)="toggleVisibility()">Ajouter un quiz</button>
     </div>
     
-    <div class="quiz-list w-full flex items-start justify-between gap-4">
-        <div class="col-1">
+    <div class="quiz-list w-full flex items-start justify-between gap-4" style="margin-bottom: 45px;">
+        <div class="col-1 w-[700px]">
             <h2 class="text-xl font-semibold" style="margin-bottom: 20px;">Quiz Disponibles</h2>
             <app-quiz-list />
         </div>
-        <div class="col-2">
+        <div *ngIf="isFormVisible()" class="col-2">
             <app-quiz-form />
+        </div>
+    </div>
+
+    <div class="quiz-list w-full flex items-start justify-between gap-4">
+        <div class="col-1 w-[700px]">
+            <h2 class="text-xl font-semibold" style="margin-bottom: 20px;">Quiz des drivers</h2>
+            <app-user-quiz-list />
         </div>
     </div>
 </div>

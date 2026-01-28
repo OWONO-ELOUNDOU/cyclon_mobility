@@ -16,6 +16,9 @@ export class QuizFormComponent {
   private quizService = inject(QuizService);
 
   isLoading = signal<boolean>(false);
+  state = signal<string>('');
+  message = signal<string>('');
+  hasMessage = signal<boolean>(false);
   quizForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     totalAvrage: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -37,21 +40,32 @@ export class QuizFormComponent {
         this.quizService.createQuiz(this.quizForm.value).subscribe({
           next: (response) => {
             this.isLoading.set(false);
-            console.log('Quiz created successfully:', response);
+            this.hasMessage.set(true);
+            this.showToastMessage('success', 'Le quiz a été crée');
+            window.location.reload();
           },
           error: (error) => {
             this.isLoading.set(false);
+            this.hasMessage.set(true);
+            this.showToastMessage('error', `${error.message}`)
             console.error('Error creating quiz:', error);
           }
         });
       } catch (error) {
         this.isLoading.set(false);
+        this.hasMessage.set(true);
+        this.showToastMessage('error', 'UNe erreur est survenue')
         console.log(error)
       }
         
     } else {
       this.markFormGroupTouched(this.quizForm);
     }
+  }
+
+  showToastMessage(type: string, details: string) {
+    this.state.set(type);
+    this.message.set(details);
   }
 
   private markFormGroupTouched(formGroup: FormGroup): void {

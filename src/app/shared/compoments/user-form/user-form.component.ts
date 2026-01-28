@@ -60,6 +60,7 @@ export class UserFormComponent {
         this.userService.createUser(this.userForm.value).subscribe({
           next: (data) => {
             this.isLoading.update(v => !v);
+            this.router.navigate(['/users']);
             console.log(data);
           },
           error: (error) => {

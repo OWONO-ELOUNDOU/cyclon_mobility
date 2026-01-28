@@ -8,9 +8,23 @@ export interface Quiz {
 export interface QuizResponse {
     id: number;
     title: string;
-    totalAerage: number;
+    totalAvrage: number;
     minAvrage: number;
     maxAvrage: number;
     createdAt: string;
     updatedAt: string;
+}
+
+export interface UserQuizRequest {
+    userId: number;
+    quizId: number;
+    note: number;
+    file: string;
+}
+
+export interface userQuiz {
+    id: number;
+    userId: number;
+    quizId: number;
+    note: number;
 }

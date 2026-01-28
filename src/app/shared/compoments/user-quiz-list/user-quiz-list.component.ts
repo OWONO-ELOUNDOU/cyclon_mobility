@@ -1,52 +1,49 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Quiz, QuizResponse } from '../../models/quiz.models';
+import { userQuiz } from '../../models/quiz.models';
 import { QuizService } from '../../../services/Quiz/quiz.service';
 
 @Component({
   standalone: true,
-  selector: 'app-quiz-list',
+  selector: 'app-user-quiz-list',
   imports: [CommonModule],
-  templateUrl: './quiz-list.component.html',
-  styleUrl: './quiz-list.component.scss'
+  templateUrl: './user-quiz-list.component.html',
+  styleUrl: './user-quiz-list.component.scss'
 })
-export class QuizListComponent implements OnInit {
+export class UserQuizListComponent implements OnInit {
   private quizService = inject(QuizService);
 
   isLoading = signal<boolean>(false);
-  quizzes = signal<QuizResponse[]>([]);
+  userQuizzes = signal<userQuiz[]>([]);
 
   constructor() { }
 
   ngOnInit(): void {
-    this.fetchQuizzes();
+    this.fetchUserQuizzes();
   }
 
-  fetchQuizzes(): void {
-
+  fetchUserQuizzes() {
     try {
-      this.quizService.getQuizzes().subscribe({
-        next: (quizzes: QuizResponse[]) => {
-          this.quizzes.set(quizzes);
-          console.log('Fetched quizzes:', this.quizzes());
+      this.quizService.getAllUserQuizzes().subscribe({
+        next: (data) => {
+          this.userQuizzes.set(data);
+          console.log('Fetched user quizzes:', this.userQuizzes());
         },
         error: (error: any) => {
-          console.log('Error fetching quizzes:', error);
+          console.error('Error fetching user quizzes:', error);
         }
       });
     } catch (error) {
-      console.log('Unexpected error fetching quizzes:', error);
+      console.log(error);
     }
   }
 
   onDelete(id: number) {
     this.isLoading.set(true);
     try {
-      this.quizService.deleteQuiz(id).subscribe({
-        next: () => {
-          window.location.reload()
-        },
+      this.quizService.deleteUserQuiz(id).subscribe({
+        next: () => window.location.reload(),
         error: (error) => {
           alert('Erreur lors de la suppression du quiz');
           this.isLoading.set(false);

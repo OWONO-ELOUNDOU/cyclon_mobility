@@ -39,7 +39,7 @@
     </button>
   </div>
 
-  <div>
-    <app-toast-message />
+  <div *ngIf="hasMessage()" class="w-full" style="margin-top: 15px;">
+    <app-toast-message [state]="state()" [message]="message()" />
   </div>
 </form>

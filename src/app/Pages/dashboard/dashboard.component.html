@@ -1,8 +1,15 @@
 <div class="dashboard w-full h-full">
     <div class="header w-full">
         <app-navbar />
+    </div>
+    <div class="stats w-full" style="margin: 30px 0;">
+        <h1 class="text-xl font-semibold" style="margin-bottom: 15px;">Vue d'ensemble</h1>
 
-        <div class="stats"></div>
+        <div class="w-full flex items-center justify-start flex-wrap gap-6">
+            <app-card-stat [count]="driverCount()" [text]="countText" />
+            <app-card-stat [count]="driverPendingCount()" [text]="pendingText" />
+            <app-card-stat [count]="driverValidatedCount()" [text]="validatdText" />
+        </div>
     </div>
 
     <div class="content w-full h-auto">

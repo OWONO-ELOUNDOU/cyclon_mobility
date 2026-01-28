@@ -1,36 +1,50 @@
 <div class="table-container w-full">
+    <div *ngIf="isLoading()" class="w-full flex items-end justify-end gap-2 text-xs text-red-600 font-semibold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-icon lucide-loader">
+            <path d="M12 2v4"/>
+            <path d="m16.2 7.8 2.9-2.9"/>
+            <path d="M18 12h4"/>
+            <path d="m16.2 16.2 2.9 2.9"/>
+            <path d="M12 18v4"/>
+            <path d="m4.9 19.1 2.9-2.9"/>
+            <path d="M2 12h4"/>
+            <path d="m4.9 4.9 2.9 2.9"/>
+        </svg>
+        suppression en cours...
+    </div>
     <p-table [value]="usersList()">
         <ng-template #header>
-            <tr>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Nom</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Prénom</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Téléphone</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Email</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">date de Naissance</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Adresse</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Numéro CNI</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Expiration CNI</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Expiration Permis</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">Actif</th>
-                <th class="text-xs text-gray-600 font-semibold" style="padding-bottom: 15px;">action</th>
+            <tr class="w-full bg-gray-100">
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Nom</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Prénom</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Téléphone</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Email</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">date de Naissance</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Adresse</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Numéro CNI</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Expiration CNI</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Expiration Permis</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Actif</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">action</td>
             </tr>
         </ng-template>
         <ng-template #body let-user>
             <tr>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.firstName }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.lastName }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.phone }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.email }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.birthDate }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.adress }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.cniNumber }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.cniExpireDate }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.driverLicenceExpireDate }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px 0;">{{ user.isActive ? 'Actif' : 'Inactif' }}</td>
-                <td class="text-xs text-center text-gray-600 font-semibold cursor-pointer" style="padding: 20px 0;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye">
-                        <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
-                        <circle cx="12" cy="12" r="3"/>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.firstName }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.lastName }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.phone }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.email }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.birthDate }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.adress }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.cniNumber }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.cniExpireDate }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.driverLicenceExpireDate }}</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.isActive ? 'Actif' : 'Inactif' }}</td>
+                <td class="text-xs text-center text-gray-600 font-semibold cursor-pointer" (click)="onDelete(user.id)" style="padding: 20px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash">
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+                        <path d="M3 6h18"/>
+                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
                     </svg>
                 </td>
             </tr>

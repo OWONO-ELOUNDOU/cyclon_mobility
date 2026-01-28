@@ -1,0 +1,31 @@
+<form [formGroup]="userQuizForm" class="w-full max-w-[700] flex items-center justify-start flex-wrap gap-6" (ngSubmit)="onSubmit()">
+    <div class="input-field w-[200px] flex items-start justify-start flex-col gap-2">
+        <label class="text-xs text-gray-600 font-semibold">Quiz</label>
+        <div *ngIf="userQuizForm.get('quizId')?.invalid && (userQuizForm.get('quizId')?.touched || userQuizForm.get('quizId')?.dirty)" class="text-xs text-red-600">Nom requis</div>
+        <select formControlName="quizId" id="quizId" class="w-full border border-gray-300 rounded-md cursor-pointer" style="padding: 5px;">
+            <option value="" disabled selected>Sélectionner un quiz</option>
+            <option *ngFor="let quiz of quizzes()" [value]="quiz.id" class="text-xs font-semibold">{{ quiz.title }}</option>
+        </select>
+    </div>
+    <div class="input-field w-[200px] flex items-start justify-start flex-col gap-2">
+        <label class="text-xs text-gray-600 font-semibold">Note</label>
+        <div *ngIf="userQuizForm.get('note')?.invalid && (userQuizForm.get('note')?.touched || userQuizForm.get('note')?.dirty)" class="text-xs text-red-600">Nom requis</div>
+        <input type="number" formControlName="note" class="w-full border border-gray-300 rounded-md text-xs text-gray-600 font-semibold cursor-pointer" style="padding: 5px;">
+    </div>
+    <div class="input-field w-[200px] flex items-start justify-start flex-col gap-2">
+        <label class="text-xs text-gray-600 font-semibold">Image</label>
+        <input type="file" accept="image/*" class="w-full border border-gray-300 rounded-md text-xs text-gray-600 font-semibold cursor-pointer" style="padding: 5px;" (change)="onImageSelected($event)">
+    </div>
+    <div class="input-field w-[200px]">
+        <button type="submit" class="w-full text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;">
+            @if(isLoading()) {
+                soumission en cours...
+            } @else {
+                Ajouter la note
+            }
+        </button>
+    </div>
+    <div *ngIf="hasMessage()" class="input-field w-[200px]">
+        <app-toast-message [state]="state()" [message]="message()" />
+    </div>
+</form>

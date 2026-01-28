@@ -52,3 +52,14 @@ export interface SupplierResponse {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface DriverVerificationRequest {
+    isAddressConfirmation: boolean;
+    isNeighborhoodConfirmation: boolean;
+    location: string;
+}
+
+export interface DriverValidationRequest {
+    id: string;
+    validatedId: string;
+}

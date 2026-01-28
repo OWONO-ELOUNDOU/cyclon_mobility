@@ -1,1 +1,3 @@
-<p>toast-message works!</p>
+<div [ngClass]="state()" class="toast-message w-full flex items-center justify-center text-xs font-semibold rounded-md">
+    {{ message() }}
+</div>

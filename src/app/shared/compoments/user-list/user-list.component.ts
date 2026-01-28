@@ -15,6 +15,7 @@ import { UserService } from '../../../services/User/user.service';
 })
 export class UserListComponent implements OnInit {
   usersList = signal<User[]>([]);
+  isLoading = signal<boolean>(false);
 
   private userService = inject(UserService);
 
@@ -39,6 +40,23 @@ export class UserListComponent implements OnInit {
       })
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  onDelete(id: number) {
+    this.isLoading.set(true);
+    
+    try {
+      this.userService.deleteUser(id).subscribe({
+        next: () => window.location.reload(),
+        error: (error) => {
+          alert('Erreur lors de la suppression');
+          this.isLoading.set(false);
+        },
+      })
+    } catch (error) {
+      alert('Erreur lors de la suppression');
+      this.isLoading.set(false);
     }
   }
 }

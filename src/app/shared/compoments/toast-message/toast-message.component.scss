@@ -1,0 +1,12 @@
+.toast-message {
+    padding: 10px 0;
+    
+    &.success {
+        color: green;
+        background-color: #adffad;
+    }
+    &.error {
+        color: crimson;
+        background-color: #ffb9b9;
+    }
+}

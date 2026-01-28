@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { NavbarComponent } from '../navbar/navbar.component';
+import { ToastMessageComponent } from '../toast-message/toast-message.component';
 
 import { GuarantorService } from '../../../services/Guarantor/guarantor.service';
 
 @Component({
   selector: 'app-guarantor-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NavbarComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NavbarComponent, ToastMessageComponent],
   templateUrl: './guarantor-form.component.html',
   styleUrl: './guarantor-form.component.scss'
 })
@@ -21,9 +22,11 @@ export class GuarantorFormComponent implements OnInit {
   // Déclaration de variables
   driverId = signal<number>(0);
   title = signal<string>('Garant');
+  state = signal<string>('error');
+  errorMessage = signal<string>('');
   isLoading = signal<boolean>(false);
+  hasMessage = signal<boolean>(false);
   imagePreview = signal<string | null>(null);
-  errorMessage = signal<string | null>(null);
 
   // Définition du formulaire
   guarantorForm: FormGroup = new FormGroup({
@@ -59,19 +62,27 @@ export class GuarantorFormComponent implements OnInit {
       driver_id: this.driverId()
     });
     console.log(this.guarantorForm.value);
-    
+    this.isLoading.set(true);
+
     try {
       this.guarantorService.createGuarantor(this.guarantorForm.value).subscribe({
         next: (response) => {
+          this.isLoading.set(true);
+          this.hasMessage.set(true);
+          this.showToastMessage('success', 'Garant enregistré avec succès');
           console.log('Guarantor created successfully:', response);
         },
         error: (error) => {
+          this.isLoading.set(true);
+          this.hasMessage.set(true);
+          this.showToastMessage('error', 'Erreur lors enregistrement du garant');
           console.error('Error creating guarantor:', error);
-          this.errorMessage.set('Failed to create guarantor. Please try again.');
         }
       });
     } catch (error) {
-      this.errorMessage.set('An unexpected error occurred. Please try again.');
+      this.isLoading.set(true);
+      this.hasMessage.set(true);
+      this.showToastMessage('error', 'Une erreur est survenue');
     }
     
   }
@@ -79,6 +90,11 @@ export class GuarantorFormComponent implements OnInit {
   onCancel() {
     this.guarantorForm.reset();
     this.navigateTo('suppliers');
+  }
+
+  showToastMessage(type: string, details: string) {
+    this.state.set(type);
+    this.errorMessage.set(details);
   }
 
   navigateTo(path: string) {

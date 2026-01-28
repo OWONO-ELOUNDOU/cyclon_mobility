@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { SupplierResponse } from '../../models/supplier.models';
-import { UserService } from '../../../services/User/user.service';
 import { SupplierService } from '../../../services/Supplier/supplier.service';
 
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
+import { UserQuizFormComponent } from '../user-quiz-form/user-quiz-form.component';
+import { DriverValidationComponent } from '../driver-validation/driver-validation.component';
+import { DriverVerificationComponent } from '../driver-verification/driver-verification.component';
 
 @Component({
   selector: 'app-driver-details',
-  imports: [CommonModule, NavbarComponent, FileUploaderComponent],
+  imports: [CommonModule, NavbarComponent, FileUploaderComponent, UserQuizFormComponent, DriverValidationComponent, DriverVerificationComponent],
   templateUrl: './driver-details.component.html',
   styleUrl: './driver-details.component.scss'
 })
@@ -27,6 +29,7 @@ export class DriverDetailsComponent implements OnInit {
   driverId = signal<number>(0);
   imagePreview = signal<string>('');
   showFileUploader = signal<boolean>(false);
+  isQuizVisible = signal<boolean>(false);
   isGuarantorVisible = signal<boolean>(false);
   driver = signal<SupplierResponse | null>(null);
 
@@ -83,6 +86,10 @@ export class DriverDetailsComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  toggleQuizVisibility() {
+    this.isQuizVisible.update(v => !v);
   }
 
   toggleGuarantorVisibility() {

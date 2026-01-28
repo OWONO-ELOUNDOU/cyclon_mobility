@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User, UserResponse } from '../../shared/models/user.models';
 import { Observable } from 'rxjs';
-import { LoginResponse, ProfilePicture } from '../../shared/models/Auth.models';
+import { LoginResponse } from '../../shared/models/Auth.models';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,15 @@ export class UserService {
 
   createUser(request: User): Observable<UserResponse> {
     return this.http.post<UserResponse>(`${environment.apiUrl}${this.endpoint}`, request, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${this.currentUser.access_token}`
+      }
+    })
+  }
+
+  deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}${this.endpoint}/${id}`, {
       headers: {
         'content-type': 'application/json',
         'Authorization': `Bearer ${this.currentUser.access_token}`

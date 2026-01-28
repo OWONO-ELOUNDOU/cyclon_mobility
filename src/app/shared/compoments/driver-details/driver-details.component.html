@@ -47,13 +47,23 @@
             <div class="box">
                 <label class="text-xs text-gray-400 font-semibold">Vérifié</label>
                 <p class="text-sm"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
-                <button *ngIf="!driver()?.isDriverVerification" class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;">Vérifier le driver</button>
+                <app-driver-verification *ngIf="driver() && !driver()?.isDriverVerification" [place]="driver()?.location" />
             </div>
             <div class="box">
                 <label class="text-xs text-gray-400 font-semibold">Validé</label>
                 <p class="text-sm"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
-                <button *ngIf="!driver()?.isDriverValidated" class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;">Valider le driver</button>
+                <app-driver-validation *ngIf="driver() && !driver()?.isDriverValidated" />
             </div>
+        </div>
+    </div>
+    <div class="cni-info">
+        <div class="w-full flex items-start justify-start flex-wrap gap-4">
+            <h3>Quiz</h3>
+            <button class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleQuizVisibility()">Ajouter une note</button>
+        </div>
+
+        <div *ngIf="isQuizVisible()" class="infos w-full flex items-start justify-start flex-wrap gap-14">
+            <app-user-quiz-form />
         </div>
     </div>
     <div class="cni-info">

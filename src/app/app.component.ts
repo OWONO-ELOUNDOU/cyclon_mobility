@@ -5,13 +5,11 @@ import { RouterOutlet } from '@angular/router';
 
 // Import de composants
 import { SidebarComponent } from './shared/compoments/sidebar/sidebar.component';
-import { ToastModule } from 'primeng/toast';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, CommonModule, ToastModule, ConfirmDialogModule],
+  imports: [RouterOutlet, SidebarComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

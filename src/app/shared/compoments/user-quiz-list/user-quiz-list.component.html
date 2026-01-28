@@ -15,23 +15,19 @@
     <table class="w-full">
         <thead>
             <tr class="w-full bg-gray-100">
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Titre</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Score Minimum</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Score Total</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Score Maximum</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Date de création</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Id driver</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Id quiz</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Note</td>
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;"></td>
             </tr>
         </thead>
         <tbody>
-            @for (q of quizzes(); track q.id) {
+            @for (q of userQuizzes(); track q.id) {
                 <tr class="w-full border-b border-gray-300">
-                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.title }}</td>
-                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.minAvrage }}</td>
-                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.totalAvrage }}</td>
-                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.maxAvrage }}</td>
-                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.createdAt }}</td>
-                    <td class="text-xs text-gray-600 font-semibold cursor-pointer" (click)="onDelete(q.id)" style="padding: 10px;">
+                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.userId }}</td>
+                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.quizId }}</td>
+                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.note }}</td>
+                    <td class="text-xs text-gray-600 font-semibold cursor-pointer" style="padding: 10px;" (click)="onDelete(q.id)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash">
                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
                             <path d="M3 6h18"/>
