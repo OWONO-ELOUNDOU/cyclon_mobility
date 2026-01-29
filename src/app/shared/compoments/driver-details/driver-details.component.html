@@ -63,7 +63,7 @@
         </div>
 
         <div *ngIf="isQuizVisible()" class="infos w-full flex items-start justify-start flex-wrap gap-14">
-            <app-user-quiz-form />
+            <app-user-quiz-form [id]="driverId()" />
         </div>
     </div>
     <div class="cni-info">
@@ -122,7 +122,7 @@
                 }
             </div>
             <div *ngIf="showFileUploader()">
-                <app-file-uploader [hasCategory]="true" />
+                <app-file-uploader [driverId]="driverId()" [hasCategory]="true" />
             </div>
         </div>
     </div>

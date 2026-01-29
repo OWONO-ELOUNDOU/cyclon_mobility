@@ -57,7 +57,7 @@
         <div class="input-group w-full flex items-start justify-between flex-wrap gap-2">
             <div class="input-field w-[300px] flex items-start jutify-start flex-col gap-2">
                 <label for="profileImage" class="text-xs text-gray-600 font-semibold">Photo de profil</label>
-                <input type="file" id="profileImage" formControlName="profileImage" accept="image/*" class="w-full text-xs font-semibold border border-gray-300 rounded-md p-2 cursor-pointer" (change)="onImageSelected($event)">
+                <input type="file" id="profileImage" formControlName="profilePicture" accept="image/*" class="w-full text-xs font-semibold border border-gray-300 rounded-md p-2 cursor-pointer" >
                 <div *ngIf="imagePreview()" class="w-full h-auto rounded-md overflow-hidden">
                     <img [src]="imagePreview()" alt="Preview" class="w-full h-auto object-cover">
                 </div>

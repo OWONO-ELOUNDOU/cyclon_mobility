@@ -1,3 +1,5 @@
+import { SupplierResponse } from "./supplier.models";
+
 export interface Quiz {
     title: string;
     totalAvrage: number;
@@ -16,7 +18,7 @@ export interface QuizResponse {
 }
 
 export interface UserQuizRequest {
-    userId: number;
+    driverId: number;
     quizId: number;
     note: number;
     file: string;
@@ -24,7 +26,9 @@ export interface UserQuizRequest {
 
 export interface userQuiz {
     id: number;
-    userId: number;
+    driverId: number;
+    driver: SupplierResponse;
     quizId: number;
+    quiz: QuizResponse;
     note: number;
 }

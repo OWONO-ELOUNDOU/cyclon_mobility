@@ -1,4 +1,4 @@
-<div class="quiz-list-container w-full">
+<div class="quiz-list-container w-full bg-white rounded-md">
     <div *ngIf="isLoading()" class="w-full flex items-end justify-end gap-2 text-xs text-red-600 font-semibold">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-icon lucide-loader">
             <path d="M12 2v4"/>
@@ -15,18 +15,20 @@
     <table class="w-full">
         <thead>
             <tr class="w-full bg-gray-100">
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Id driver</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Id quiz</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Driver</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Quiz</td>
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Note</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Moyenne de Quiz</td>
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;"></td>
             </tr>
         </thead>
         <tbody>
             @for (q of userQuizzes(); track q.id) {
                 <tr class="w-full border-b border-gray-300">
-                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.userId }}</td>
-                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.quizId }}</td>
+                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.driver.fullName }}</td>
+                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.quiz.title }}</td>
                     <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.note }}</td>
+                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.quiz.totalAvrage }}</td>
                     <td class="text-xs text-gray-600 font-semibold cursor-pointer" style="padding: 10px;" (click)="onDelete(q.id)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash">
                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>

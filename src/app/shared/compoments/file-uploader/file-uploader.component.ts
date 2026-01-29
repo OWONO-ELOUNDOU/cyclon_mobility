@@ -31,31 +31,30 @@ export class FileUploaderComponent {
   driverId = input<number>(0);
   isLoading = signal<boolean>(false);
   hasCategory = input<boolean>(false);
-  profilePicture = signal<File | null>(null);
+  selectedFile!: File;
   selectedImage = signal<string | null>(null);
   uploadMessage = signal<{ type: 'success' | 'error'; text: string } | null>(null);
 
   constructor() {}
 
   onImageSelected(event: Event): void {
-    const image = (event.target as HTMLInputElement).files?.[0];
-    if (image) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
       // Validate file is an image
-      if (!image.type.startsWith('image/')) {
-        alert('Veuillez sélectionner un fichier image valide');
-        return;
-      }
+      this.selectedFile = input.files[0];
+      console.log(this.selectedFile);
 
       // Update the form control with the file
-      this.profilePicture.set(image);
+      //this.profilePicture.set(image);
+      //this.uploadForm().patchValue({ file: image });
     }
   }
 
   onUpload() {
     console.log(this.driverId());
-    this.uploadForm().patchValue({ file: this.profilePicture() });
+    //this.uploadForm().patchValue({ file: this.profilePicture() });
+    this.uploadForm().patchValue({ file: this.selectedFile });
     console.log(this.uploadForm().value);
-
     
     try {
       this.uploadService.uploadfile(this.driverId(), this.uploadForm().value).subscribe({
@@ -71,7 +70,7 @@ export class FileUploaderComponent {
     } catch (error) {
       console.log(error);
     }
-      
+    
   }
 
   /**

@@ -1,4 +1,4 @@
-<form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="quiz-form w-[100%] min-w-[300px] max-w-[450px] bg-white">
+<form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="quiz-form w-[100%] min-w-[300px] max-w-[450px] bg-white rounded-md">
   <div class="w-full" style="margin-bottom: 15px;">
     <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Titre du quiz</label>
     <input type="text" id="quiz-title" formControlName="title" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Entrer le titre du quiz" />

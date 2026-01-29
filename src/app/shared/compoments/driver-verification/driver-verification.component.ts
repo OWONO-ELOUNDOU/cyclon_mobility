@@ -33,8 +33,9 @@ export class DriverVerificationComponent {
       this.isLoading.set(true);
       this.supplierService.verifyDriver(this.driverId(), this.verificationForm.value).subscribe({
         next: (response) => {
-          console.log('Driver verified successfully:', response);
           this.isLoading.set(false);
+          window.location.reload();
+          console.log('Driver verified successfully:', response);
         },
         error: (error) => {
           console.error('Error verifying driver:', error);

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, Validators, FormGroup, FormControl } from '@angular/forms';
 
@@ -21,12 +21,13 @@ export class UserQuizFormComponent implements OnInit {
 
   state = signal<string>('');
   message = signal<string>('');
+  id = input<number>(0);
   isLoading = signal<boolean>(false);
   hasMessage = signal<boolean>(false);
   quizzes = signal<QuizResponse[]>([]);
   currentUser = signal<LoginResponse | null>(null);
   userQuizForm: FormGroup = new FormGroup({
-    userId: new FormControl(0),
+    driverId: new FormControl(0),
     quizId: new FormControl(0, Validators.required),
     note: new FormControl(0, Validators.required),
     file: new FormControl('')
@@ -35,9 +36,9 @@ export class UserQuizFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.currentUser.set(localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser') || '{}') : null);
+    console.log(this.id())
     this.userQuizForm.patchValue({
-      userId: this.currentUser()?.user.id
+      driverId: this.id()
     });
     this.fecthQuizzes();
   }

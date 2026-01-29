@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SupplierService } from '../../services/Supplier/supplier.service';
@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   validatdText = 'Nombre total de driver validé';
   driverPendingCount = signal<number>(0);
   driverValidatedCount = signal<number>(0);
+  driverUnverifiedCount = computed((): number => this.driverCount() - this.driverPendingCount());
 
   constructor() { }
 

@@ -8,6 +8,7 @@
         <div class="w-full flex items-center justify-start flex-wrap gap-6">
             <app-card-stat [count]="driverCount()" [text]="countText" />
             <app-card-stat [count]="driverPendingCount()" [text]="pendingText" />
+            <app-card-stat [count]="driverUnverifiedCount()" [text]="'Nombre de drivers non vérifiés'" />
             <app-card-stat [count]="driverValidatedCount()" [text]="validatdText" />
         </div>
     </div>
