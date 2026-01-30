@@ -1,4 +1,10 @@
-<div class="table-container w-full bg-white rounded-md">
+<div class="table-container w-full flex items-start justify-start flex-wrap gap-4">
+    @if (driversList() && driversList().length > 0) {
+        @for (d of driversList(); track d.id) {
+            <app-user-card [id]="d.id" [driver]="d" />
+        }
+    }
+    <!--
     <p-table [value]="driversList()" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]" class="p-datatable-sm">
         <ng-template #header>
             <tr class="w-full bg-gray-100">
@@ -34,4 +40,5 @@
             </tr>
         </ng-template>
     </p-table>
+    -->
 </div>

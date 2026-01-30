@@ -23,8 +23,8 @@ export class FileUploaderComponent {
   ];
 
   uploadForm = signal<FormGroup>(new FormGroup({
-    categoryFile: new FormControl(''),
-    file: new FormControl('', Validators.required)
+    categoryFile: new FormControl('', Validators.required),
+    image: new FormControl('', Validators.required)
   }));
   
 
@@ -38,22 +38,22 @@ export class FileUploaderComponent {
   constructor() {}
 
   onImageSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
+    const file = event.target as HTMLInputElement;
+    if (file.files && file.files.length > 0) {
       // Validate file is an image
-      this.selectedFile = input.files[0];
+      this.selectedFile = file.files[0];
       console.log(this.selectedFile);
 
       // Update the form control with the file
       //this.profilePicture.set(image);
-      //this.uploadForm().patchValue({ file: image });
+      //this.uploadForm().patchValue({ image: file });
     }
   }
 
   onUpload() {
     console.log(this.driverId());
     //this.uploadForm().patchValue({ file: this.profilePicture() });
-    this.uploadForm().patchValue({ file: this.selectedFile });
+    //this.uploadForm().patchValue({ file: this.selectedFile });
     console.log(this.uploadForm().value);
     
     try {

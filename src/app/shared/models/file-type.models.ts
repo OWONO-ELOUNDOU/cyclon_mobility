@@ -1,5 +1,5 @@
 export interface FileRequest {
-  file: File;
+  image: File;
   categoryFile: string;
 }
 

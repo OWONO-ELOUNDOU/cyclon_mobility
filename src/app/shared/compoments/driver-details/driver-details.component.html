@@ -3,7 +3,10 @@
         <app-navbar [pageTitle]="title()" />
     </div>
     <div class="profile-picture flex items-center justify-start gap-6 mb-6">
-        <img [src]="imagePreview() ? imagePreview() : 'images/logo.png'" width="150px" height="150px" class="border border-gray-300 rounded-full" alt="">
+        <div class="w-[150px] h-[150px] flex items-center justify-center text-3xl text-white font-semibold bg-black rounded-full">
+            {{ driver()?.fullName?.charAt(0) }}{{ driver()?.fullName?.charAt(1) }}
+        </div>
+        <!--<img [src]="driver()?.profilePicture ?? 'images/logo.png'" width="150px" height="150px" class="border border-gray-300 rounded-full" alt="">-->
         <div class="form w-[250px]">
             <h2 class="text-lg font-semibold mb-2" style="margin-bottom: 10px;">Uploader une Image</h2>
             <input type="file" class="w-full text-xs font-semibold border border-gray-300 cursor-pointer" style="margin-bottom: 10px; padding: 5px;" (change)="onImageSelected($event)">

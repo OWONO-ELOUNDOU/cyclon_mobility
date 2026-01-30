@@ -1,8 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { TableModule } from 'primeng/table';
+import { UserCardComponent } from '../user-card/user-card.component';
 
 import { SupplierResponse } from '../../models/supplier.models';
 import { SupplierService } from '../../../services/Supplier/supplier.service';
@@ -10,7 +11,7 @@ import { SupplierService } from '../../../services/Supplier/supplier.service';
 @Component({
   standalone: true,
   selector: 'app-supplier-list',
-  imports: [CommonModule, TableModule],
+  imports: [CommonModule, TableModule, UserCardComponent],
   templateUrl: './supplier-list.component.html',
   styleUrl: './supplier-list.component.scss'
 })
