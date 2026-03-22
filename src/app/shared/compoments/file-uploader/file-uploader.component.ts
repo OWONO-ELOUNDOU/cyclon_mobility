@@ -53,7 +53,7 @@ export class FileUploaderComponent {
   onUpload() {
     console.log(this.driverId());
     //this.uploadForm().patchValue({ file: this.profilePicture() });
-    //this.uploadForm().patchValue({ file: this.selectedFile });
+    this.uploadForm().patchValue({ file: this.selectedFile });
     console.log(this.uploadForm().value);
     
     try {

@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, Validators, FormGroup, FormControl } from '@angular/forms';
 
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+
 import { AuthenticationService } from '../../../services/Authentication/authentication.service';
+import { ButtonDirective } from "primeng/button";
 
 @Component({
   selector: 'app-login',

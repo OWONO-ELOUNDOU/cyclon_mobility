@@ -19,9 +19,9 @@ export class DashboardComponent implements OnInit {
   private supplierService = inject(SupplierService);
 
   driverCount = signal<number>(0);
-  countText = 'Nombre total de driver';
-  pendingText = 'Nombre total de driver en attente';
-  validatdText = 'Nombre total de driver validé';
+  countText = 'Nombre de conducteurs';
+  pendingText = 'Nombre de conducteurs en attente';
+  validatedText = 'Nombre de conducteurs validés';
   driverPendingCount = signal<number>(0);
   driverValidatedCount = signal<number>(0);
   driverUnverifiedCount = computed((): number => this.driverCount() - this.driverPendingCount());

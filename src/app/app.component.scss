@@ -1,14 +1,14 @@
-$sidebar-width: 250px;
+$sidebar-width: 220px;
 
 .main-container {
-    background-color: #f4f4f4;
+    background-color: #ffffff;
 
     .sidebar {
         width: $sidebar-width;
     }
     .main-content {
         width: calc(100% - $sidebar-width);
-        padding: 10px;
+        padding: 30px 10px;
         overflow-y: auto;
         scrollbar-width: none;
     }

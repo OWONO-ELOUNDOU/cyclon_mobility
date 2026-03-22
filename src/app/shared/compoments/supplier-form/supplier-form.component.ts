@@ -14,7 +14,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
   styleUrl: './supplier-form.component.scss'
 })
 export class SupplierFormComponent {
-  title = signal<string>('utilisateurs');
+  title = signal<string>('conducteurs');
 
   private router = inject(Router);
   private supplierService = inject(SupplierService);

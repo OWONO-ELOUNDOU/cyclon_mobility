@@ -2,26 +2,28 @@
     <div class="header w-full">
         <app-navbar />
     </div>
-    <div class="stats w-full" style="margin: 30px 0;">
-        <h1 class="text-xl font-semibold" style="margin-bottom: 15px;">Vue d'ensemble</h1>
+    <div class="stats w-full" style="margin: 30px 0 70px 0;">
+        <h1 class="text-2xl font-semibold" style="margin-bottom: 15px; color: #0c5460;">Vue d'ensemble</h1>
 
         <div class="w-full flex items-center justify-start flex-wrap gap-6">
-            <app-card-stat [count]="driverCount()" [text]="countText" />
-            <app-card-stat [count]="driverPendingCount()" [text]="pendingText" />
-            <app-card-stat [count]="driverUnverifiedCount()" [text]="'Nombre de drivers non vérifiés'" />
-            <app-card-stat [count]="driverValidatedCount()" [text]="validatdText" />
+            <app-card-stat [count]="driverCount()" [text]="countText" [tagType]="'info'" [tagText]="'nouveau'" />
+            <app-card-stat [count]="driverPendingCount()" [text]="pendingText" [tagType]="'warning'" [tagText]="'en attente'" />
+            <app-card-stat [count]="driverUnverifiedCount()" [text]="'Conducteurs non vérifiés'" [tagType]="'error'" [tagText]="'non vérifié'" />
+            <app-card-stat [count]="driverValidatedCount()" [text]="validatedText" [tagType]="'success'" [tagText]="'validé'" />
         </div>
     </div>
 
     <div class="content w-full h-auto">
         <section style="margin-bottom: 45px;">
-            <h1 class="text-xl font-semibold" style="margin-bottom: 20px;">Listes des utilisateurs</h1>
-            <app-user-list />
+            <h1 class="text-2xl font-semibold" style="margin-bottom: 20px; color: #0c5460;">Listes des utilisateurs</h1>
+            <div class="w-full border-2 border-gray-200 rounded-2xl" style="padding: 20px;">
+                <app-user-list />
+            </div>
         </section>
 
 
         <section style="margin-bottom: 45px;">
-            <h1 class="text-xl font-semibold" style="margin-bottom: 20px;">Listes des drivers</h1>
+            <h1 class="text-2xl font-semibold" style="margin-bottom: 20px; color: #0c5460;">Listes des drivers</h1>
             <app-supplier-list />
         </section>
     </div>

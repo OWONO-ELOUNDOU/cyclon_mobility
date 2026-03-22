@@ -14,7 +14,7 @@ import { GuarantorService } from '../../../services/Guarantor/guarantor.service'
   styleUrl: './guarantor-list.component.scss'
 })
 export class GuarantorListComponent implements OnInit {
-  title = signal('Liste des garants');
+  title = signal('garants');
 
   private router = inject(Router);
   private guarantorService = inject(GuarantorService);
