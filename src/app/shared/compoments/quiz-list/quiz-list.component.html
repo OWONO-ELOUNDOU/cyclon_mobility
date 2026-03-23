@@ -20,6 +20,7 @@
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Score Total</td>
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Score Maximum</td>
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Date de création</td>
+                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Date de modification</td>
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Actions</td>
             </tr>
         </thead>
@@ -30,10 +31,11 @@
                     <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.minAvrage }}</td>
                     <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.totalAvrage }}</td>
                     <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.maxAvrage }}</td>
-                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.createdAt }}</td>
+                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.createdAt | date:'short' }}</td>
+                    <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">{{ q.updatedAt | date:'short' }}</td>
                     <td class="text-xs text-gray-600 font-semibold cursor-pointer" style="padding: 10px;">
                         <div class="w-full flex items-center justify-center gap-3">
-                            <div (click)="navigateToQuizForm()">
+                            <div (click)="navigateToQuizForm(q.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen-icon lucide-pen">
                                     <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
                                 </svg>

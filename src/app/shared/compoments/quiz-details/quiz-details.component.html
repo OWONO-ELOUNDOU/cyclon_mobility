@@ -1,1 +1,94 @@
-<p>quiz-details works!</p>
+<div class="quiz-details w-full" style="padding: 20px 0;">
+    <div class="w-full" style="margin-bottom: 50px;">
+        <app-navbar [pageTitle]="'Détails quiz utlisateur'" />
+    </div>
+
+    <h1 class="text-2xl font-semibold" style="margin-bottom: 30px; color: #0c5460;">Détails du quiz utilisateur</h1>
+
+    <div class="w-[450px]" *ngIf="hasMessage()" style="margin-top: 20px;">
+        <app-toast-message [state]="state()" [message]="message()" />
+    </div>
+
+    
+    @if (isLoading()) {
+        <div class="w-[450px] flex items-center justify-start gap-4" style="margin: 30px 0;">
+            <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="text-xs text-gray-600 font-semibold">Chargement des détails du quiz...</span>
+        </div>
+    } @else {
+        <div class="w-full flex items-center justify-start gap-4 flex-wrap">
+            <div class="w-[450px] bg-white border-2 border-gray-200 rounded-lg" style="padding: 20px;">
+                <h3 class="text-xl font-semibold" style="margin-bottom: 15px;">Informations sur le quiz</h3>
+    
+                <ul class="w-full flex items-center justify-center flex-col gap-4">
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Identifiant: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.id }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Titre: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.quiz?.title }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Note minimal: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.quiz?.minAvrage }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Note maximale: </label>
+                        <span class="text-sm text-green-600 font-semibold">{{ item()?.quiz?.maxAvrage }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Note totale: </label>
+                        <span class="text-sm text-blue-600 font-semibold">{{ item()?.quiz?.totalAvrage }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Date de création: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.createdAt | date:'short'}}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Date de modification: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.updatedAt | date:'short'}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="w-[450px] bg-white border-2 border-gray-200 rounded-lg" style="padding: 20px;">
+                <h3 class="text-xl font-semibold" style="margin-bottom: 15px;">Informations sur le conducteur</h3>
+    
+                <ul class="w-full flex items-center justify-center flex-col gap-4">
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Identifiant: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.driver?.id }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Nom complet: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.driver?.fullName }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Adresse mail: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.driver?.email }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Téléphone: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.driver?.phone }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Localisation: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.driver?.adress }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Possède une CNI: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.driver?.haveCni ? 'Oui' : 'Non' }}</span>
+                    </li>
+                    <li class="w-full flex items-center justify-between text-xs text-gray-500 font-semibold">
+                        <label>Possède un permis: </label>
+                        <span class="text-sm text-gray-800 font-semibold">{{ item()?.driver?.haveDriverLicence ? 'Oui' : 'Non' }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+
+</div>

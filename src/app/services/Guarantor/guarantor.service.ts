@@ -27,8 +27,8 @@ export class GuarantorService {
   }
 
   // Récupération des informations d'un garant par son ID
-  getGuarantorById(id: number): Observable<GuarantorResponse> {
-    return this.http.get<GuarantorResponse>(`${this.apiUrl}/${id}`, { headers: this.headerOptions });
+  getGuarantorById(id: number): Observable<Guarantor> {
+    return this.http.get<Guarantor>(`${this.apiUrl}/${id}`, { headers: this.headerOptions });
   }
 
   // Mise à jour des informations d'un garant

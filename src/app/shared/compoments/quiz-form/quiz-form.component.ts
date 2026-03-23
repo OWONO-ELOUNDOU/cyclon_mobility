@@ -1,24 +1,27 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, Validators, FormGroup, FormControl } from '@angular/forms';
 
 import { QuizService } from '../../../services/Quiz/quiz.service';
 
+import { NavbarComponent } from '../navbar/navbar.component';
 import { ToastMessageComponent } from '../toast-message/toast-message.component';
 
 @Component({
   selector: 'app-quiz-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToastMessageComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToastMessageComponent, NavbarComponent],
   templateUrl: './quiz-form.component.html',
   styleUrl: './quiz-form.component.scss'
 })
-export class QuizFormComponent {
+export class QuizFormComponent implements OnInit {
   private quizService = inject(QuizService);
 
-  isLoading = signal<boolean>(false);
   state = signal<string>('');
   message = signal<string>('');
+  mode = signal<string>('create');
+  isLoading = signal<boolean>(false);
   hasMessage = signal<boolean>(false);
+  quiId = signal<number | null>(null);
   quizForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     totalAvrage: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -28,14 +31,38 @@ export class QuizFormComponent {
 
   constructor() { }
 
+  ngOnInit(): void {
+    this.checkMode();
+  }
+
   get f() {
     return this.quizForm.controls;
   }
 
+  checkMode() {
+    this.quiId.set(localStorage.getItem('quizId') ? Number(localStorage.getItem('quizId')) : null);
+
+    if (this.quiId()) {
+      this.mode.set('edit');
+    } else {
+      this.mode.set('create');
+    }
+  }
+
   onSubmit() {
+    if (this.mode() === 'create') {
+      this.createQuiz();
+    } else if (this.mode() === 'edit') {
+      const quizId = this.quizForm.get('id')?.value;
+      this.updateQuiz(quizId);
+    }
+  }
+
+  createQuiz() {
     if (this.quizForm.valid) {
       console.log(this.quizForm.value);
       this.isLoading.set(true);
+
       try {
         this.quizService.createQuiz(this.quizForm.value).subscribe({
           next: (response) => {
@@ -54,10 +81,43 @@ export class QuizFormComponent {
       } catch (error) {
         this.isLoading.set(false);
         this.hasMessage.set(true);
-        this.showToastMessage('error', 'UNe erreur est survenue')
+        this.showToastMessage('error', 'Une erreur est survenue')
         console.log(error)
       }
-        
+    } else {
+      this.markFormGroupTouched(this.quizForm);
+    }
+  }
+
+  updateQuiz(id: number) {
+    if (this.quizForm.valid) {
+      console.log(this.quizForm.value);
+      this.isLoading.set(true);
+
+      try {
+        this.quizService.updateQuiz(id, this.quizForm.value).subscribe({
+          next: (response) => {
+            this.isLoading.set(false);
+            this.hasMessage.set(true);
+            this.showToastMessage('success', 'Le quiz a été modifié');
+            this.quiId.set(null);
+            localStorage.removeItem('quizId');
+            this.mode.set('create');
+            window.location.reload();
+          },
+          error: (error) => {
+            this.isLoading.set(false);
+            this.hasMessage.set(true);
+            this.showToastMessage('error', `${error.message}`)
+            console.error('Error updating quiz:', error);
+          }
+        });
+      } catch (error) {
+        this.isLoading.set(false);
+        this.hasMessage.set(true);
+        this.showToastMessage('error', 'Une erreur est survenue')
+        console.log(error)
+      }
     } else {
       this.markFormGroupTouched(this.quizForm);
     }

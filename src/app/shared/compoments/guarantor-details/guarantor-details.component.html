@@ -1,1 +1,143 @@
-<p>guarantor-details works!</p>
+<div class="guarantor-details-container w-full" style="padding: 20px 0;">
+    <div class="w-full" style="margin-bottom: 50px;">
+        <app-navbar [pageTitle]="'Détails garant'" />
+    </div>
+
+    <h1 class="text-2xl font-semibold" style="margin-bottom: 30px; color: #0c5460;">Détails du quiz utilisateur</h1>
+
+    <div class="w-[450px]" *ngIf="hasMessage()" style="margin-top: 20px;">
+        <app-toast-message [state]="state()" [message]="message()" />
+    </div>
+
+    @if (isLoading()) {
+        <div class="flex items-start justify-start gap-2 text-sm text-gray-600 font-semibold">
+            <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            chargement des informations...
+        </div>
+    }
+    @else {
+        <div class="w-full flex items-start justify-start flex-col gap-4">
+            <div>
+                <h2 class="text-xl font-semibold" style="margin-bottom: 15px;">Photo de profile</h2>
+                <div class="flex items-start justify-start gap-8 flex-wrap">
+                    <div class="w-[120px] h-[120px] text-2xl font-semibold border-2 border-gray-200 rounded-full">
+                        <img [src]="guarantorDetailsInfo()?.profilePicture" alt="Profile Picture" class="w-full h-full object-cover rounded-full" *ngIf="guarantorDetailsInfo()?.profilePicture; else noProfilePicture" />
+                        <ng-template #noProfilePicture>
+                            <div class="w-full text-xl text-center text-gray-100 rounded-full" style="line-height: 120px; background-color: #0c5460;">
+                                {{ guarantorDetailsInfo()?.firstName?.charAt(0) }}{{ guarantorDetailsInfo()?.lastName?.charAt(0) }}
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="w-[150px] flex items-center justify-center flex-col gap-3">
+                        <p class="text-sm text-gray-700 font-semibold">Changer la photo</p>
+                        <button
+                            class="w-full flex items-center justify-center gap-2 text-xs text-blue-600 font-semibold bg-white border border-blue-300 shadow-sm rounded-md cursor-pointer"
+                            style="padding: 5px 0;"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-from-line-icon lucide-arrow-up-from-line">
+                                <path d="m18 9-6-6-6 6"/>
+                                <path d="M12 3v14"/>
+                                <path d="M5 21h14"/>
+                            </svg>
+                            Uploader la photo
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full bg-white border-2 border-gray-200 rounded-lg" style="padding: 20px;">
+                <h2 class="text-xl font-semibold" style="margin-bottom: 20px;">Informations personnelles</h2>
+    
+                <div class="w-full flex items-center justify-start flex-wrap gap-4">
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Nom</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.firstName }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Prénom</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.lastName }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Numéro de téléphone</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.phone }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Date de naissance</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.birthDate }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Adresse</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.adress }}</p>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="w-full bg-white border-2 border-gray-200 rounded-lg" style="padding: 20px;">
+                <h2 class="text-xl font-semibold" style="margin-bottom: 20px;">Informations d'identification</h2>
+    
+                <div class="w-full flex items-center justify-start flex-wrap gap-4">
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Numéro de CNI</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.cniNumber }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Date d'expiration</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.cniExpireDate }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Relation avec le conducteur</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.guarandAffiliation }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Date de création</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.createdAt | date:'short' }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Date de modification</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.updatedAt | date:'short' }}</p>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="w-full bg-white border-2 border-gray-200 rounded-lg" style="padding: 20px;">
+                <h2 class="text-xl font-semibold" style="margin-bottom: 20px;">Informations sur conducteur</h2>
+    
+                <div class="w-full flex items-center justify-start flex-wrap gap-4">
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Nom complet</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.driver?.fullName }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Date de naissance</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.driver?.birthDate }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Numéro de téléphone</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.driver?.phone }}</p>
+                    </div>
+                    <div class="w-[200px]">
+                        <label class="text-xs text-gray-400 font-semibold">Adresse</label>
+                        <p class="text-sm text-gray-800 font-semibold">{{ guarantorDetailsInfo()?.driver?.adress }}</p>
+                    </div>
+                </div>
+    
+                <button
+                    class="w-[150px] flex items-center justify-center gap-2 text-xs text-blue-600 font-semibold border border-blue-300 shadow-sm rounded-md"
+                    style="padding: 5px 0; margin-top: 20px;"
+                    (click)="navigateToDriverDetails(guarantorDetailsInfo()?.driver?.id)"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-eye">
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                    voir les détails
+                </button>
+            </div>
+        </div>
+    }
+
+</div>

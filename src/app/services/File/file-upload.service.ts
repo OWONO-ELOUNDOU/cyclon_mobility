@@ -15,10 +15,36 @@ export class FileUploadService {
 
 
   uploadfile(userId: number, fileRequest: FileRequest): Observable<FileTypeResponse> {
-    return this.http.post<FileTypeResponse>(this.apiUrl + `/upload/${userId}`, fileRequest, {
+    const formData = this.toFormData(fileRequest);
+
+    return this.http.post<FileTypeResponse>(this.apiUrl + `/upload/${userId}`, formData, {
       headers: {
         'content-type': 'application/json'
       }
     });
+  }
+
+  /**
+   * Convertit un objet en FormData.
+   * Gère les fichiers et sérialise les objets imbriqués en JSON.
+   */
+  private toFormData(data: any): FormData {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const value = data[key];
+        if (value !== null && value !== undefined) {
+          if (value instanceof File) {
+            formData.append(key, value);
+          } else if (typeof value === 'object') {
+            formData.append(key, JSON.stringify(value));
+          } else {
+            formData.append(key, String(value));
+          }
+        }
+      }
+    }
+    return formData;
   }
 }

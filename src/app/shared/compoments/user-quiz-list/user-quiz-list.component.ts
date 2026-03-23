@@ -73,7 +73,8 @@ export class UserQuizListComponent implements OnInit {
     }
   }
 
-  navigateToUserQuizDetails() {
+  navigateToUserQuizDetails(id: number) {
+    localStorage.setItem('quizId', id.toString());
     this.router.navigate(['/quiz/details']);
   }
 

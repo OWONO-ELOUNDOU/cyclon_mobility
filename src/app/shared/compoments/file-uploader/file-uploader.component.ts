@@ -2,6 +2,7 @@ import { Component, computed, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { FileRequest } from '../../models/file-type.models';
 import { FileUploadService } from '../../../services/File/file-upload.service';
 
 @Component({
@@ -23,8 +24,7 @@ export class FileUploaderComponent {
   ];
 
   uploadForm = signal<FormGroup>(new FormGroup({
-    categoryFile: new FormControl('', Validators.required),
-    image: new FormControl('', Validators.required)
+    categoryFile: new FormControl('', Validators.required)
   }));
   
 
@@ -32,32 +32,35 @@ export class FileUploaderComponent {
   isLoading = signal<boolean>(false);
   hasCategory = input<boolean>(false);
   selectedFile!: File;
-  selectedImage = signal<string | null>(null);
+  selectedImage = signal<File | null>(null);
   uploadMessage = signal<{ type: 'success' | 'error'; text: string } | null>(null);
 
   constructor() {}
 
   onImageSelected(event: Event): void {
-    const file = event.target as HTMLInputElement;
-    if (file.files && file.files.length > 0) {
-      // Validate file is an image
-      this.selectedFile = file.files[0];
-      console.log(this.selectedFile);
+    const input = event.target as HTMLInputElement;
 
-      // Update the form control with the file
-      //this.profilePicture.set(image);
-      //this.uploadForm().patchValue({ image: file });
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+      if (!allowedTypes.includes(file.type)) {
+        this.selectedImage.set(null);
+        input.value = '';
+      } else {
+        this.selectedImage.set(file);
+      }
     }
+    
   }
+
 
   onUpload() {
     console.log(this.driverId());
-    //this.uploadForm().patchValue({ file: this.profilePicture() });
-    this.uploadForm().patchValue({ file: this.selectedFile });
-    console.log(this.uploadForm().value);
-    
+    const formValue = this.uploadForm().getRawValue();
+    const uploadRequest: FileRequest = { ...formValue, image: this.selectedImage() };
     try {
-      this.uploadService.uploadfile(this.driverId(), this.uploadForm().value).subscribe({
+      this.uploadService.uploadfile(this.driverId(), uploadRequest).subscribe({
         next: (response) => {
           console.log(response);
           this.showMessage('success', 'Fichier téléchargé avec succès');

@@ -1,3 +1,5 @@
+import { Supplier, SupplierResponse } from "./supplier.models";
+
 export interface Guarantor {
     firstName: string;
     lastName: string;
@@ -8,7 +10,9 @@ export interface Guarantor {
     phone: string;
     profilePicture: string;
     guarandAffiliation: string;
-    driver_id: number;
+    driver: SupplierResponse;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface GuarantorResponse {

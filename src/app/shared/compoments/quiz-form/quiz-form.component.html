@@ -1,45 +1,67 @@
-<form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="quiz-form w-[100%] min-w-[300px] max-w-[450px] bg-white rounded-md">
-  <div class="w-full" style="margin-bottom: 15px;">
-    <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Titre du quiz</label>
-    <input type="text" id="quiz-title" formControlName="title" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Entrer le titre du quiz" />
-    <div *ngIf="quizForm.get('title')?.invalid && (quizForm.get('title')?.touched || quizForm.get('title')?.dirty)" class="text-xs text-red-600">Titre requis</div>
-  </div>
-  <div class="w-full" style="margin-bottom: 15px;">
-    <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Score Total</label>
-    <input type="number" id="quiz-title" formControlName="totalAvrage" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Enter quiz title" />
-    <div *ngIf="quizForm.get('totalAvrage')?.invalid && (quizForm.get('totalAvrage')?.touched || quizForm.get('totalAvrage')?.dirty)" class="text-xs text-red-600">Score total requis</div>
-  </div>
-  <div class="w-full" style="margin-bottom: 15px;">
-    <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Score Minimum</label>
-    <input type="number" id="quiz-title" formControlName="minAvrage" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Enter quiz title" />
-    <div *ngIf="quizForm.get('minAvrage')?.invalid && (quizForm.get('minAvrage')?.touched || quizForm.get('minAvrage')?.dirty)" class="text-xs text-red-600">Score minimum requis</div>
-  </div>
-  <div class="w-full" style="margin-bottom: 15px;">
-    <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Score maximum</label>
-    <input type="number" id="quiz-title" formControlName="maxAvrage" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Enter quiz title" />
-    <div *ngIf="quizForm.get('maxAvrage')?.invalid && (quizForm.get('maxAvrage')?.touched || quizForm.get('maxAvrage')?.dirty)" class="text-xs text-red-600">Score maximum requis</div>
-  </div>
-  <div class="w-full">
-    <button class="w-full text-xs text-green-600 font-semibold bg-green-100 rounded-md cursor-pointer" style="padding: 10px 0;">
-        @if (isLoading()) {
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-icon lucide-loader">
-                <path d="M12 2v4"/>
-                <path d="m16.2 7.8 2.9-2.9"/>
-                <path d="M18 12h4"/>
-                <path d="m16.2 16.2 2.9 2.9"/>
-                <path d="M12 18v4"/>
-                <path d="m4.9 19.1 2.9-2.9"/>
-                <path d="M2 12h4"/>
-                <path d="m4.9 4.9 2.9 2.9"/>
-            </svg>
-            Soumission en cours...
-        } @else {
-            Soumettre le quiz
-        }
-    </button>
+<div class="w-full" style="padding: 20px 0;">
+
+  <div class="w-full" style="margin-bottom: 50px;">
+    <app-navbar [pageTitle]="'Ajouter un quiz'" />
   </div>
 
-  <div *ngIf="hasMessage()" class="w-full" style="margin-top: 15px;">
-    <app-toast-message [state]="state()" [message]="message()" />
-  </div>
-</form>
+  <h1 class="flex items-center justify-start gap-4 text-2xl font-semibold" style="margin-bottom: 20px; color: #0c5460;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0c5460" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-minus-corner-icon lucide-file-minus-corner">
+      <path d="M20 14V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12"/>
+      <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
+      <path d="M14 18h6"/>
+    </svg>
+    {{ mode() === 'create' ? 'Création' : 'Modification' }} d'un quiz
+  </h1>
+
+  <form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="quiz-form w-[100%] min-w-[300px] max-w-[450px] flex items-center justify-center flex-col gap-4 border-2 border-gray-300 bg-white rounded-md">
+    <div class="w-full" style="margin-bottom: 15px;">
+      <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Titre du quiz</label>
+      <input type="text" id="quiz-title" formControlName="title" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Entrer le titre du quiz" />
+      <div *ngIf="quizForm.get('title')?.invalid && (quizForm.get('title')?.touched || quizForm.get('title')?.dirty)" class="text-xs text-red-600">Titre requis</div>
+    </div>
+    <div class="w-full" style="margin-bottom: 15px;">
+      <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Score Total</label>
+      <input type="number" id="quiz-title" formControlName="totalAvrage" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Enter quiz title" />
+      <div *ngIf="quizForm.get('totalAvrage')?.invalid && (quizForm.get('totalAvrage')?.touched || quizForm.get('totalAvrage')?.dirty)" class="text-xs text-red-600">Score total requis</div>
+    </div>
+    <div class="w-full" style="margin-bottom: 15px;">
+      <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Score Minimum</label>
+      <input type="number" id="quiz-title" formControlName="minAvrage" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Enter quiz title" />
+      <div *ngIf="quizForm.get('minAvrage')?.invalid && (quizForm.get('minAvrage')?.touched || quizForm.get('minAvrage')?.dirty)" class="text-xs text-red-600">Score minimum requis</div>
+    </div>
+    <div class="w-full" style="margin-bottom: 15px;">
+      <label for="quiz-title" class="block text-xs font-semibold text-gray-700" style="margin-bottom: 5px;">Score maximum</label>
+      <input type="number" id="quiz-title" formControlName="maxAvrage" class="w-full text-xs font-semibold border border-gray-300 rounded px-3 py-2" style="padding: 10px;" placeholder="Enter quiz title" />
+      <div *ngIf="quizForm.get('maxAvrage')?.invalid && (quizForm.get('maxAvrage')?.touched || quizForm.get('maxAvrage')?.dirty)" class="text-xs text-red-600">Score maximum requis</div>
+    </div>
+    <div class="w-full">
+      <button class="w-full flex items-center justify-center gap-2 text-xs text-green-600 font-semibold bg-white border border-green-300 shadow-sm rounded-md cursor-pointer" style="padding: 10px 0;">
+          @if (isLoading()) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-icon lucide-loader">
+              <path d="M12 2v4"/>
+              <path d="m16.2 7.8 2.9-2.9"/>
+              <path d="M18 12h4"/>
+              <path d="m16.2 16.2 2.9 2.9"/>
+              <path d="M12 18v4"/>
+              <path d="m4.9 19.1 2.9-2.9"/>
+              <path d="M2 12h4"/>
+              <path d="m4.9 4.9 2.9 2.9"/>
+            </svg>
+            {{ mode() === 'create' ? 'Création' : 'Modification' }} en cours...
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-plus-corner-icon lucide-file-plus-corner">
+              <path d="M11.35 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v5.35"/>
+              <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
+              <path d="M14 19h6"/>
+              <path d="M17 16v6"/>
+            </svg>
+            {{ mode() === 'create' ? 'Créer' : 'Modifier' }} le quiz
+          }
+      </button>
+    </div>
+  
+    <div *ngIf="hasMessage()" class="w-full" style="margin-top: 15px;">
+      <app-toast-message [state]="state()" [message]="message()" />
+    </div>
+  </form>
+</div>

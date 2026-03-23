@@ -84,7 +84,8 @@ export class GuarantorListComponent implements OnInit {
     }
   }
 
-  navigateToGuarantorDetails() {
+  navigateToGuarantorDetails(garantId: number) {
+    localStorage.setItem('garantId', garantId.toString());
     this.router.navigate(['/guarantor/details']);
   }
 

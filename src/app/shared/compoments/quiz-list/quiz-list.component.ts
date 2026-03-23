@@ -69,7 +69,8 @@ export class QuizListComponent implements OnInit {
     }
   }
 
-  navigateToQuizForm() {
+  navigateToQuizForm(id: number) {
+    localStorage.setItem('quizId', id.toString());
     this.router.navigate(['/quiz/form']);
   }
 }
