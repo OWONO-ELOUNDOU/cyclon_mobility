@@ -1,4 +1,23 @@
 <div class="guarantor-list-container w-full bg-white rounded-md">
+    <div class="w-full flex items-end justify-end gap-2">
+        <div *ngIf="hasError()">
+            <app-toast-message [state]="state()" [message]="message()" />
+        </div>
+        <div *ngIf="isLoading()" class="flex items-center justify-center gap-2 text-xs text-red-600 font-semibold">
+            <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="red" stroke-width="4"></circle>
+                <path class="opacity-75" fill="red" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            suppression en cours...
+        </div>
+        <div *ngIf="isFetching()" class="flex items-center justify-center gap-2 text-xs text-gray-600 font-semibold">
+            <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            chargement des garants...
+        </div>
+    </div>
     <p-table [value]="guarantors()" class="w-full" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]">
         <ng-template #header>
             <tr class="w-full bg-gray-100">
@@ -21,15 +40,15 @@
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 15px;">{{ user.cniNumber }}</td>
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 15px;">{{ user.cniExpireDate }}</td>
                 <td class="text-xs text-gray-600 font-semibold" style="padding: 15px;">{{ user.guarandAffiliation }}</td>
-                <td class="text-xs text-center text-gray-600 font-semibold" style="padding: 15px;">
+                <td class="text-xs text-center text-gray-600 font-semibold cursor-pointer" style="padding: 15px;">
                     <div class="w-full flex items-center justify-center gap-4">
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye">
+                        <div (click)="navigateToGuarantorDetails()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0c5460" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye">
                                 <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
                                 <circle cx="12" cy="12" r="3"/>
                             </svg>
                         </div>
-                        <div>
+                        <div (click)="delete(user.id)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash">
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
                                 <path d="M3 6h18"/>

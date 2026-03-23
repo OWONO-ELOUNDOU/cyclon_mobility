@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { Quiz, QuizResponse } from '../../models/quiz.models';
 import { QuizService } from '../../../services/Quiz/quiz.service';
@@ -12,6 +13,7 @@ import { QuizService } from '../../../services/Quiz/quiz.service';
   styleUrl: './quiz-list.component.scss'
 })
 export class QuizListComponent implements OnInit {
+  private router = inject(Router);
   private quizService = inject(QuizService);
 
   isLoading = signal<boolean>(false);
@@ -56,5 +58,18 @@ export class QuizListComponent implements OnInit {
       alert('une erreur est survenue');
       this.isLoading.set(false);
     }
+  }
+
+  showQuizDetails(id: number) {
+    this.isLoading.set(true);
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
+  navigateToQuizForm() {
+    this.router.navigate(['/quiz/form']);
   }
 }

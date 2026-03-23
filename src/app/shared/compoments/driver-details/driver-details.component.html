@@ -10,11 +10,22 @@
         <div class="form w-[250px]">
             <h2 class="text-lg font-semibold mb-2" style="margin-bottom: 10px;">Uploader une Image</h2>
             <input type="file" class="w-full text-xs font-semibold border border-gray-300 cursor-pointer" style="margin-bottom: 10px; padding: 5px;" (change)="onImageSelected($event)">
-            <button class="w-full text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer"d style="padding: 5px 0;" (click)="onUpload()">Uploader la photo</button>
+            <button
+                class="w-full flex items-center justify-center gap-3 text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer"
+                style="padding: 5px 0;"
+                (click)="onUpload()"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-from-line-icon lucide-arrow-up-from-line">
+                    <path d="m18 9-6-6-6 6"/>
+                    <path d="M12 3v14"/>
+                    <path d="M5 21h14"/>
+                </svg>
+                Uploader la photo
+            </button>
         </div>
     </div>
     <div class="personal-info">
-        <h3>Informations Personnelles</h3>
+        <h3 class="text-2xl font-semibold">Informations Personnelles</h3>
 
         <div class="infos w-full flex items-start justify-between flex-wrap gap-3">
             <div class="box">
@@ -49,12 +60,12 @@
         <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
             <div class="box">
                 <label class="text-xs text-gray-400 font-semibold">Vérifié</label>
-                <p class="text-sm"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
+                <p class="text-sm" style="margin-bottom: 10px;"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
                 <app-driver-verification *ngIf="driver() && !driver()?.isDriverVerification" [place]="driver()?.location" />
             </div>
             <div class="box">
                 <label class="text-xs text-gray-400 font-semibold">Validé</label>
-                <p class="text-sm"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
+                <p class="text-sm" style="margin-bottom: 10px;"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
                 <app-driver-validation *ngIf="driver() && !driver()?.isDriverValidated" />
             </div>
         </div>
@@ -62,7 +73,7 @@
     <div class="cni-info">
         <div class="w-full flex items-start justify-start flex-wrap gap-4">
             <h3>Quiz</h3>
-            <button class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleQuizVisibility()">Ajouter une note</button>
+            <button class="w-[150px] text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleQuizVisibility()">Ajouter une note</button>
         </div>
 
         <div *ngIf="isQuizVisible()" class="infos w-full flex items-start justify-start flex-wrap gap-14">
@@ -109,7 +120,7 @@
     <div class="cni-info">
         <div class="w-full flex items-start justify-start flex-wrap gap-4">
             <h3>Documents Joints</h3>
-            <button class="w-[200px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleUploaderVisibility()">Ajouter un document</button>
+            <button class="w-[200px] text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleUploaderVisibility()">Ajouter un document</button>
         </div>
         
         <div class="w-full flex items-center justify-start flex-wrap gap-10">
@@ -137,7 +148,14 @@
             <div class="box">
                 <label class="text-xs text-gray-400 font-semibold">Garant</label>
                 <p class="text-sm"><strong>{{ driver()?.haveGuarantor ? 'Oui' : 'Non' }}</strong></p>
-                <button *ngIf="!driver()?.haveGuarantor" (click)="navigateTo('guarantor/form')" class="text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer" style="padding: 5px 15px; margin-top: 10px;">Joindre un garant</button>
+                <button
+                    *ngIf="!driver()?.haveGuarantor"
+                    (click)="navigateTo('guarantor/form')"
+                    class="text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer"
+                    style="padding: 5px 15px; margin-top: 10px;"
+                >
+                    Joindre un garant
+                </button>
             </div>
             <div class="box">
                 <label class="text-xs text-gray-400 font-semibold">Driver validé</label>

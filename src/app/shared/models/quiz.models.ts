@@ -31,4 +31,6 @@ export interface userQuiz {
     quizId: number;
     quiz: QuizResponse;
     note: number;
+    createdAt: string;
+    updatedAt: string;
 }

@@ -1,15 +1,22 @@
 .driver-details-container {
     width: 100%;
 
+    .profile-picture { margin-bottom: 30px; }
+
     .header { margin-bottom: 35px; }
     .profile-picture,
     .personal-info,
     .cni-info {
-        padding: 20px 0;
-        margin-bottom: 20px;
-        border-bottom: 1px dashed lightgray;
+        &:not(.profile-picture) {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border: 2px solid lightgray;
+            background-color: white;
+        }
 
         h3 {
+            font-size: 20px;
             font-weight: 600;
             margin-bottom: 15px;
         }

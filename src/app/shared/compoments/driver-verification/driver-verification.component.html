@@ -1,8 +1,12 @@
 <button
     (click)="onVerify()"
     [disabled]="isLoading()"
-    class="w-[150px] text-xs text-white font-semibold bg-blue-600 rounded-md cursor-pointer"
+    class="w-[150px] text-xs text-blue-600 font-semibold border border-gray-300 bg-white shadow-sm rounded-md cursor-pointer"
     style="padding: 5px 0;"
 >
-    Vérifier le Driver
+    @if (isLoading()) {
+        vérification...
+    } @else {
+        Vérifier
+    }
 </button>

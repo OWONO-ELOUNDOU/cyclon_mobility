@@ -48,6 +48,11 @@ export const routes: Routes = [
         loadComponent: () => import('./shared/compoments/guarantor-form/guarantor-form.component').then(c => c.GuarantorFormComponent)
     },
     {
+        path: 'guarantor/details',
+        canActivate: [authGuard],
+        loadComponent: () => import('./shared/compoments/guarantor-details/guarantor-details.component').then(c => c.GuarantorDetailsComponent)
+    },
+    {
         path: 'guarantors',
         canActivate: [authGuard],
         loadComponent: () => import('./Pages/guarantors/guarantors.component').then(c => c.GuarantorsComponent)
@@ -56,5 +61,15 @@ export const routes: Routes = [
         path: 'quiz',
         canActivate: [authGuard],
         loadComponent: () => import('./Pages/quiz/quiz.component').then(c => c.QuizComponent)
+    },
+    {
+        path: 'quiz/form',
+        canActivate: [authGuard],
+        loadComponent: () => import('./shared/compoments/quiz-form/quiz-form.component').then(c => c.QuizFormComponent)
+    },
+    {
+        path: 'quiz/details',
+        canActivate: [authGuard],
+        loadComponent: () => import('./shared/compoments/quiz-details/quiz-details.component').then(c => c.QuizDetailsComponent)
     },
 ];
