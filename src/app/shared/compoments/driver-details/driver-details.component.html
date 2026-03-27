@@ -128,7 +128,7 @@
                 @if (driver()?.files) {
                     @for (f of driver()?.files; track $index) {
                         <div class="box w-[200px] border border-gray-300 rounded-md">
-                            <img [src]="f.path" class="w-full" alt="" srcset="">
+                            <img [src]="f.path" class="w-full" [alt]="f.name" srcset="">
                         </div>
                     }
                 } @else {

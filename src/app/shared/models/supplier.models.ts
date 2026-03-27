@@ -39,7 +39,7 @@ export interface SupplierResponse {
     driverLicenceExpireDate: string;
     adress: string;
     email: string;
-    files: any[];
+    files: FileTy[];
     carType: string;
     phone: string;
     isAdressConfirmation: boolean;

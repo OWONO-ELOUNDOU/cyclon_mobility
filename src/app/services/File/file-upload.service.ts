@@ -17,11 +17,7 @@ export class FileUploadService {
   uploadfile(userId: number, fileRequest: FileRequest): Observable<FileTypeResponse> {
     const formData = this.toFormData(fileRequest);
 
-    return this.http.post<FileTypeResponse>(this.apiUrl + `/upload/${userId}`, formData, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    });
+    return this.http.post<FileTypeResponse>(this.apiUrl + `/upload/${userId}`, formData);
   }
 
   /**
