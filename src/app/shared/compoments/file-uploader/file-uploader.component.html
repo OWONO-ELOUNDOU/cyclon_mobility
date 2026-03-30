@@ -12,11 +12,22 @@
         <div>
             <button
                 type="button"
-                class="w-full text-xs text-green-600 font-semibold bg-white border border-green-300 shadow-sm rounded-md p-2 cursor-pointer"
+                [ngClass]="{
+                    'bg-green-600 text-white border-green-600': uploadForm().valid,
+                    'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed': !uploadForm().valid
+                }"
+                class="w-full text-xs font-semibold border shadow-sm rounded-md p-2 cursor-pointer"
                 style="padding: 5px 0;"
                 (click)="onUpload()"
             >
-                Uploader
+                @if (isLoading()) {
+                    <span class="flex items-center justify-content">
+                        <span class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>
+                        Uploading...
+                    </span>
+                } @else {
+                    Uploader
+                }
             </button>
         </div>
     </form>

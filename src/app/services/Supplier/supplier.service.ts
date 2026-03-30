@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
 import { environment } from '../../environments/environment';
 import { LoginResponse } from '../../shared/models/Auth.models';
-import { DriverValidationRequest, DriverVerificationRequest, Supplier, SupplierResponse } from '../../shared/models/supplier.models';
+import { DriverProfilePictureUpdateRequest, DriverValidationRequest, DriverVerificationRequest, Supplier, SupplierResponse } from '../../shared/models/supplier.models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,9 @@ import { Observable } from 'rxjs';
 export class SupplierService {
   private readonly endpoint = '/driver';
   private currentUser: LoginResponse = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  private httpOptions = {
+    'Authorization': `Bearer ${this.currentUser.access_token}`
+  }
 
   private http = inject(HttpClient);
 
@@ -34,13 +37,9 @@ export class SupplierService {
     })
   }
 
-  uploadProfilePicture(id: number, file: any): Observable<string> {
-    return this.http.post<string>(`${environment.apiUrl}${this.endpoint}/${id}/profile-picture`, file, {
-      headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${this.currentUser.access_token}`
-      }
-    });
+  uploadProfilePicture(id: number, fileData: DriverProfilePictureUpdateRequest): Observable<string> {
+    const formData = this.toFormData(fileData);
+    return this.http.post<string>(`${environment.apiUrl}${this.endpoint}/${id}/profile-picture`, formData, { headers: this.httpOptions });
   }
 
   deleteDriver(id: number): Observable<void> {
@@ -104,5 +103,29 @@ export class SupplierService {
         'Authorization': `Bearer ${this.currentUser.access_token}`
       }
     })
+  }
+
+  /**
+   * Convertit un objet en FormData.
+   * Gère les fichiers et sérialise les objets imbriqués en JSON.
+   */
+  private toFormData(data: any): FormData {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const value = data[key];
+        if (value !== null && value !== undefined) {
+          if (value instanceof File) {
+            formData.append(key, value);
+          } else if (typeof value === 'object') {
+            formData.append(key, JSON.stringify(value));
+          } else {
+            formData.append(key, String(value));
+          }
+        }
+      }
+    }
+    return formData;
   }
 }

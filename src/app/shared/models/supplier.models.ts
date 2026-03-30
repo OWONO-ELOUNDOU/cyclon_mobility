@@ -1,3 +1,5 @@
+import { FileTypeResponse } from "./file-type.models";
+
 export interface Supplier {
     fullName: string;
     birthDate: string;
@@ -39,7 +41,7 @@ export interface SupplierResponse {
     driverLicenceExpireDate: string;
     adress: string;
     email: string;
-    files: FileTy[];
+    files: FileTypeResponse[];
     carType: string;
     phone: string;
     isAdressConfirmation: boolean;
@@ -62,4 +64,8 @@ export interface DriverVerificationRequest {
 export interface DriverValidationRequest {
     id: string;
     validatedId: string;
+}
+
+export interface DriverProfilePictureUpdateRequest {
+    file: File;
 }

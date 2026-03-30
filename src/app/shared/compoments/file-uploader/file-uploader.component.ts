@@ -59,6 +59,8 @@ export class FileUploaderComponent {
     console.log(this.driverId());
     const formValue = this.uploadForm().getRawValue();
     const uploadRequest: FileRequest = { ...formValue, image: this.selectedImage() };
+    this.isLoading.set(true);
+    
     try {
       this.uploadService.uploadfile(this.driverId(), uploadRequest).subscribe({
         next: (response) => {

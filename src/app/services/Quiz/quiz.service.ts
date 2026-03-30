@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Quiz, QuizResponse, userQuiz } from '../../shared/models/quiz.models';
+import { Quiz, QuizResponse, userQuiz, UserQuizRequest } from '../../shared/models/quiz.models';
 import { LoginResponse } from '../../shared/models/Auth.models';
 
 @Injectable({
@@ -13,7 +13,6 @@ export class QuizService {
   private currentUser: LoginResponse = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!) : null;
 
   private headerOptions = {
-    'content-type': 'application/json',
     'Authorization': `Bearer ${this.currentUser.access_token}`
   }
 
@@ -45,9 +44,15 @@ export class QuizService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.headerOptions });
   }
 
+  /**
+   * 
+   * Gestion des quiz utilisateurs
+   */
+
   // Créer un quiz utilisateur
-  createUserQuiz(userQuiz: userQuiz): Observable<userQuiz> {
-    return this.http.post<userQuiz>(`${this.apiUrl}-user`, userQuiz, { headers: this.headerOptions });
+  createUserQuiz(quizData: UserQuizRequest): Observable<userQuiz> {
+    const formData = this.toFormData(quizData);
+    return this.http.post<userQuiz>(`${this.apiUrl}-user`, formData, { headers: this.headerOptions });
   }
 
   // Récupérer un quiz utilisateur
@@ -68,5 +73,29 @@ export class QuizService {
   // Récupérer tous les quiz des utilisateurs
   getAllUserQuizzes(): Observable<userQuiz[]> {
     return this.http.get<userQuiz[]>(`${this.apiUrl}-user`, { headers: this.headerOptions });
+  }
+
+  /**
+   * Convertit un objet en FormData.
+   * Gère les fichiers et sérialise les objets imbriqués en JSON.
+   */
+  private toFormData(data: any): FormData {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const value = data[key];
+        if (value !== null && value !== undefined) {
+          if (value instanceof File) {
+            formData.append(key, value);
+          } else if (typeof value === 'object') {
+            formData.append(key, JSON.stringify(value));
+          } else {
+            formData.append(key, String(value));
+          }
+        }
+      }
+    }
+    return formData;
   }
 }

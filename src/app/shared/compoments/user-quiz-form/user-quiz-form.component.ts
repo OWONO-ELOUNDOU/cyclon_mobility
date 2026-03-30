@@ -19,18 +19,19 @@ import { ToastMessageComponent } from '../toast-message/toast-message.component'
 export class UserQuizFormComponent implements OnInit {
   private quizService = inject(QuizService);
 
+  id = input<number>(0);
   state = signal<string>('');
   message = signal<string>('');
-  id = input<number>(0);
   isLoading = signal<boolean>(false);
   hasMessage = signal<boolean>(false);
   quizzes = signal<QuizResponse[]>([]);
+  selectedImage = signal<File | null>(null);
   currentUser = signal<LoginResponse | null>(null);
+
   userQuizForm: FormGroup = new FormGroup({
     driverId: new FormControl(0),
     quizId: new FormControl(0, Validators.required),
-    note: new FormControl(0, Validators.required),
-    file: new FormControl('')
+    note: new FormControl(0, Validators.required)
   });
 
   constructor() { }
@@ -48,19 +49,20 @@ export class UserQuizFormComponent implements OnInit {
   }
 
   onImageSelected(event: Event): void {
-    const image = (event.target as HTMLInputElement).files?.[0];
-    if (image) {
-      // Validate file is an image
-      if (!image.type.startsWith('image/')) {
-        alert('Veuillez sélectionner un fichier image valide');
-        return;
-      }
+    const input = event.target as HTMLInputElement;
 
-      // Update the form control with the file
-      this.userQuizForm.patchValue({
-        file: image
-      });
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+      if (!allowedTypes.includes(file.type)) {
+        this.selectedImage.set(null);
+        input.value = '';
+      } else {
+        this.selectedImage.set(file);
+      }
     }
+    
   }
 
   fecthQuizzes() {
@@ -81,11 +83,12 @@ export class UserQuizFormComponent implements OnInit {
 
   onSubmit() {
     if (this.userQuizForm.valid) {
-      console.log(this.userQuizForm.value);
+      const formValue = this.userQuizForm.getRawValue();
+      const quizRequest = { ...formValue, file: this.selectedImage() };
       this.isLoading.set(true);
 
       try {
-        this.quizService.createUserQuiz(this.userQuizForm.value).subscribe({
+        this.quizService.createUserQuiz(quizRequest).subscribe({
           next: (response) => {
             this.isLoading.set(false);
             console.log('User quiz created successfully:', response);

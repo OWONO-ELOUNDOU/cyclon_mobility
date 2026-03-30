@@ -3,24 +3,44 @@
         <app-navbar [pageTitle]="title()" />
     </div>
     <div class="profile-picture flex items-center justify-start gap-6 mb-6">
-        <div class="w-[150px] h-[150px] flex items-center justify-center text-3xl text-white font-semibold bg-black rounded-full">
-            {{ driver()?.fullName?.charAt(0) }}{{ driver()?.fullName?.charAt(1) }}
-        </div>
-        <!--<img [src]="driver()?.profilePicture ?? 'images/logo.png'" width="150px" height="150px" class="border border-gray-300 rounded-full" alt="">-->
+        <img
+            [src]="driver()?.profilePicture ?? imagePreview()"
+            width="150px"
+            height="150px"
+            class="border border-gray-300 rounded-full object-cover"
+            alt="Profile Picture"
+            *ngIf="driver()?.profilePicture || imagePreview(), else noProfilePicture"
+        >
+        <ng-template #noProfilePicture>
+            <div class="w-[150px] h-[150px] flex items-center justify-center text-3xl text-white font-semibold bg-black rounded-full">
+                {{ driver()?.fullName?.charAt(0) }}{{ driver()?.fullName?.charAt(1) }}
+            </div>
+        </ng-template>
         <div class="form w-[250px]">
             <h2 class="text-lg font-semibold mb-2" style="margin-bottom: 10px;">Uploader une Image</h2>
             <input type="file" class="w-full text-xs font-semibold border border-gray-300 cursor-pointer" style="margin-bottom: 10px; padding: 5px;" (change)="onImageSelected($event)">
+
+            <div *ngIf="hasMessage()">
+                <app-toast-message [state]="state()" [message]="message()" />
+            </div>
+
             <button
-                class="w-full flex items-center justify-center gap-3 text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer"
+                [ngClass]="isUploading() ? 'text-gray-300 border-gray-300' : 'text-blue-600 border-blue-100'"
+                class="w-full flex items-center justify-center gap-3 text-xs font-semibold bg-white border shadow-sm rounded-md cursor-pointer"
                 style="padding: 5px 0;"
                 (click)="onUpload()"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-from-line-icon lucide-arrow-up-from-line">
-                    <path d="m18 9-6-6-6 6"/>
-                    <path d="M12 3v14"/>
-                    <path d="M5 21h14"/>
-                </svg>
-                Uploader la photo
+                @if (isUploading()) {
+                    Uploading...
+                }
+                @else {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-from-line-icon lucide-arrow-up-from-line">
+                        <path d="m18 9-6-6-6 6"/>
+                        <path d="M12 3v14"/>
+                        <path d="M5 21h14"/>
+                    </svg>
+                    Uploader la photo
+                }
             </button>
         </div>
     </div>
@@ -127,8 +147,8 @@
             <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
                 @if (driver()?.files) {
                     @for (f of driver()?.files; track $index) {
-                        <div class="box w-[200px] border border-gray-300 rounded-md">
-                            <img [src]="f.path" class="w-full" [alt]="f.name" srcset="">
+                        <div class="box w-[350px] h-[150px] border border-gray-300 rounded-md">
+                            <img [src]="f.path" class="w-full h-full object-cover" [alt]="f.originalName" srcset="">
                         </div>
                     }
                 } @else {

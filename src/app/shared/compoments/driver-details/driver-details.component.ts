@@ -2,10 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { SupplierResponse } from '../../models/supplier.models';
+import { DriverProfilePictureUpdateRequest, SupplierResponse } from '../../models/supplier.models';
 import { SupplierService } from '../../../services/Supplier/supplier.service';
 
 import { NavbarComponent } from '../navbar/navbar.component';
+import { ToastMessageComponent } from '../toast-message/toast-message.component';
 import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
 import { UserQuizFormComponent } from '../user-quiz-form/user-quiz-form.component';
 import { DriverValidationComponent } from '../driver-validation/driver-validation.component';
@@ -13,7 +14,7 @@ import { DriverVerificationComponent } from '../driver-verification/driver-verif
 
 @Component({
   selector: 'app-driver-details',
-  imports: [CommonModule, NavbarComponent, FileUploaderComponent, UserQuizFormComponent, DriverValidationComponent, DriverVerificationComponent],
+  imports: [CommonModule, NavbarComponent, ToastMessageComponent, FileUploaderComponent, UserQuizFormComponent, DriverValidationComponent, DriverVerificationComponent],
   templateUrl: './driver-details.component.html',
   styleUrl: './driver-details.component.scss'
 })
@@ -26,10 +27,15 @@ export class DriverDetailsComponent implements OnInit {
 
   // Déclaration des variables
   picture!: File;
+  state = signal<string>('');
+  message = signal<string>('');
   driverId = signal<number>(0);
   imagePreview = signal<string>('');
-  showFileUploader = signal<boolean>(false);
+  hasMessage = signal<boolean>(false);
+  isUploading = signal<boolean>(false);
   isQuizVisible = signal<boolean>(false);
+  selectedImage = signal<File | null>(null);
+  showFileUploader = signal<boolean>(false);
   isGuarantorVisible = signal<boolean>(false);
   driver = signal<SupplierResponse | null>(null);
 
@@ -57,35 +63,54 @@ export class DriverDetailsComponent implements OnInit {
   }
 
   onImageSelected(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      // Validate file is an image
-      if (!file.type.startsWith('image/')) {
-        alert('Veuillez sélectionner un fichier image valide');
-        return;
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+      if (!allowedTypes.includes(file.type)) {
+        this.selectedImage.set(null);
+        input.value = '';
+      } else {
+        this.selectedImage.set(file);
+        this.imagePreview.set(URL.createObjectURL(file));
       }
-
-      // Create a preview URL
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.imagePreview.set(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-
-      // Update the form control with the file
-      this.picture = file;
     }
+    
   }
 
   onUpload() {
+    const fileRequest: DriverProfilePictureUpdateRequest = { file: this.selectedImage() as File };
+    this.isUploading.set(true);
+
     try {
-      this.supplierService.uploadProfilePicture(this.driverId(), this.picture).subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.log(error.message)
+      this.supplierService.uploadProfilePicture(this.driverId(), fileRequest).subscribe({
+        next: (response) => {
+          this.isUploading.set(false);
+          console.log(response);
+          this.showMessage('success', 'Image téléchargée avec succès');
+          this.fetchDriverDetails();
+        },
+        error: (error) => {
+          this.isUploading.set(false);
+          this.showMessage('error', 'Erreur lors du téléchargement de l\'image');
+          console.log(error.message);
+        }
       })
     } catch (error) {
       console.log(error);
+      this.showMessage('error', 'Une erreur est survenue lors du téléchargement de l\'image');
     }
+  }
+
+  showMessage(type: string, details: string) {
+    this.state.set(type);
+    this.message.set(details);
+    this.hasMessage.set(true);
+    setTimeout(() => {
+      this.hasMessage.set(false);
+    }, 3000);
   }
 
   toggleQuizVisibility() {

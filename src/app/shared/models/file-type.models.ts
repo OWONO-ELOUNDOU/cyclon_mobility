@@ -8,4 +8,9 @@ export interface FileTypeResponse {
   fileName: string;
   userId: number;
   categoryFile: string;
+  mimeType: string;
+  originalName: string;
+  path: string;
+  size: number;
+  uploadedAt: string;
 }
