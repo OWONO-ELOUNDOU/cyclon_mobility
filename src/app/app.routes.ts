@@ -72,4 +72,14 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./shared/compoments/quiz-details/quiz-details.component').then(c => c.QuizDetailsComponent)
     },
+    {
+        path: 'file/types',
+        canActivate: [authGuard],
+        loadComponent: () => import('./Pages/file-types/file-types.component').then(c => c.FileTypesComponent)
+    },
+    {
+        path: 'car/types',
+        canActivate: [authGuard],
+        loadComponent: () => import('./Pages/car-types/car-types.component').then(c => c.CarTypesComponent)
+    },
 ];

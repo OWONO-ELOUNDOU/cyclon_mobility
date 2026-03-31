@@ -1,0 +1,120 @@
+<div class="w-full border-b border-gray-300" style="margin-bottom: 30px; padding: 5px 0;">
+    <app-navbar [title]="'Types de véhicules'" />
+</div>
+<div class="card" style="padding: 0 10px;">
+  <div class="w-full flex items-center justify-between mb-4" style="margin-bottom: 35px;">
+    <h2 class="text-2xl font-semibold">Manage File Types</h2>
+
+    <button
+        class="w-[150px] h-[35px] flex items-center justify-center gap-2 text-xs text-blue-600 font-semibold border border-blue-300 shadow-sm rounded-md cursor-pointer transition duration-200 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        (click)="addNew()"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
+            <path d="M5 12h14"/>
+            <path d="M12 5v14"/>
+        </svg>
+        Nouveau Type
+    </button>
+  </div>
+
+  <table class="w-full max-w-[700px] bg-white border border-gray-300 rounded-md shadow-sm">
+    <thead class="w-full bg-gray-200 border-b border-gray-300" style="padding-bottom: 10px;">
+      <tr style="padding: 10px 0;">
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">ID</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">Title</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">Numéro d'immatriculation</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">Date de création</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">Date de modification</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">Actions</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="w-full border-b border-gray-300" style="padding: 10px 0;">
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">1</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">Sedan</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">ABC-123</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">2023-01-01</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">2023-01-01</td>
+        <td class="flex items-center justify-center gap-3 cursor-pointer" style="padding: 10px 0;">
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen-icon lucide-pen">
+                <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+            </svg>
+          </button>
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash">
+                <path d="M4 7h16"/>
+                <path d="M10 11v6"/>
+                <path d="M14 11v6"/>
+                <path d="M5 7l1.5 12a2 2 0 0 0 2 1.5h7a2 2 0 0 0 2-1.5L19 7"/>
+                <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+            </svg>
+          </button>
+        </td>
+      </tr>
+      <tr class="w-full border-b border-gray-300" style="padding: 10px 0;">
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">1</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">Sedan</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">ABC-123</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">2023-01-01</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">2023-01-01</td>
+        <td class="flex items-center justify-center gap-3 cursor-pointer" style="padding: 10px 0;">
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen-icon lucide-pen">
+                <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+            </svg>
+          </button>
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash">
+                <path d="M4 7h16"/>
+                <path d="M10 11v6"/>
+                <path d="M14 11v6"/>
+                <path d="M5 7l1.5 12a2 2 0 0 0 2 1.5h7a2 2 0 0 0 2-1.5L19 7"/>
+                <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+            </svg>
+          </button>
+        </td>
+      </tr>
+      <tr class="w-full border-b border-gray-300" style="padding: 10px 0;">
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">1</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">Sedan</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">ABC-123</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">2023-01-01</td>
+        <td class="text-xs text-gray-600 font-semibold text-center" style="padding: 10px 0;">2023-01-01</td>
+        <td class="flex items-center justify-center gap-3 cursor-pointer" style="padding: 10px 0;">
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen-icon lucide-pen">
+                <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+            </svg>
+          </button>
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash">
+                <path d="M4 7h16"/>
+                <path d="M10 11v6"/>
+                <path d="M14 11v6"/>
+                <path d="M5 7l1.5 12a2 2 0 0 0 2 1.5h7a2 2 0 0 0 2-1.5L19 7"/>
+                <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p-dialog [(visible)]="displayDialog" [style]="{width: '450px', border: '1px solid #ccc', padding: '1rem', backgroundColor: 'white', borderRadius: '10px'}" header="Type de véhicule" [modal]="true" styleClass="p-fluid">
+    <form class="w-full flex items-center justify-center flex-col gap-4" style="margin-top: 15px;">
+        <div class="w-full flex items-start justify-start flex-col gap-2 field">
+          <label class="text-xs text-gray-600 font-semibold" for="title">Titre</label>
+          <input type="text" id="title" class="w-full h-[35px] text-xs text-gray-700 font-semibold border-2 border-gray-300 rounded-md" style="padding-left: 10px;" [(ngModel)]="carType().title" required autofocus />
+        </div>
+        <div class="w-full flex items-start justify-start flex-col gap-2 field">
+          <label class="text-xs text-gray-600 font-semibold" for="registrationNumber">Numéro d'immatriculation</label>
+          <input type="text" id="registrationNumber" class="w-full h-[35px] text-xs text-gray-700 font-semibold border-2 border-gray-300 rounded-md" style="padding-left: 10px;" [(ngModel)]="carType().registrationNumber" required autofocus />
+        </div>
+        <div class="w-full flex items-center justify-between gap-3 flex-wrap">
+          <button class="w-[200px] h-[35px] text-xs text-gray-600 font-semibold border-2 border-gray-600 shadow-sm rounded-md cursor-pointer" (click)="displayDialog.set(false)">Annuler</button>
+          <button class="w-[200px] h-[35px] text-xs text-green-600 font-semibold border-2 border-green-600 shadow-sm rounded-md cursor-pointer" (click)="saveCarType()">Enregistrer</button>
+        </div>
+    </form>
+</p-dialog>

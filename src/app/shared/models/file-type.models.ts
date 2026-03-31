@@ -14,3 +14,10 @@ export interface FileTypeResponse {
   size: number;
   uploadedAt: string;
 }
+
+export interface FileType {
+  id: number;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+}

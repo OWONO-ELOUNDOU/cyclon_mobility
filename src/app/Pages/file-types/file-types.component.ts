@@ -30,9 +30,9 @@ export class FileTypesComponent implements OnInit {
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
 
-  fileTypes: FileTypeResponse[] = [];
+  fileTypes: FileType[] = [];
   displayDialog: boolean = false;
-  fileType: Partial<FileTypeResponse> = {};
+  fileType: Partial<FileType> = {};
   isNew: boolean = true;
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class FileTypesComponent implements OnInit {
 
   loadFileTypes(): void {
     this.fileTypeService.getAllFileTypes().subscribe({
-      next: (data: FileTypeResponse[]) => {
+      next: (data) => {
         this.fileTypes = data;
       },
       error: (err: any) => {
@@ -57,13 +57,13 @@ export class FileTypesComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  editFileType(fileType: FileTypeResponse): void {
+  editFileType(fileType: FileType): void {
     this.isNew = false;
     this.fileType = { ...fileType };
     this.displayDialog = true;
   }
 
-  deleteFileType(fileType: FileTypeResponse): void {
+  deleteFileType(fileType: FileType): void {
     this.confirmationService.confirm({
       message: `Are you sure you want to delete "${fileType.title}"?`,
       header: 'Confirm Deletion',
@@ -89,14 +89,14 @@ export class FileTypesComponent implements OnInit {
       return;
     }
 
-    const payload: FileType = { title: this.fileType.title };
+    const payload: Partial<FileType> = { title: this.fileType.title };
 
     const operation = this.isNew
       ? this.fileTypeService.createFileType(payload)
       : this.fileTypeService.updateFileType(this.fileType.id!, payload);
 
     operation.subscribe({
-      next: (response: FileTypeResponse) => {
+      next: (response) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: `File Type ${this.isNew ? 'Created' : 'Updated'}` });
         this.loadFileTypes();
         this.displayDialog = false;
