@@ -3,7 +3,7 @@
         <app-navbar [pageTitle]="'Détails garant'" />
     </div>
 
-    <h1 class="text-2xl font-semibold" style="margin-bottom: 30px; color: #0c5460;">Détails du quiz utilisateur</h1>
+    <h1 class="text-2xl font-semibold" style="margin-bottom: 30px; color: #0c5460;">Détails du garant</h1>
 
     <div class="w-[450px]" *ngIf="hasMessage()" style="margin-top: 20px;">
         <app-toast-message [state]="state()" [message]="message()" />
@@ -22,27 +22,39 @@
         <div class="w-full flex items-start justify-start flex-col gap-4">
             <div>
                 <h2 class="text-xl font-semibold" style="margin-bottom: 15px;">Photo de profile</h2>
-                <div class="flex items-start justify-start gap-8 flex-wrap">
+                <div class="w-[450px] flex items-start justify-start gap-18 flex-wrap">
                     <div class="w-[120px] h-[120px] text-2xl font-semibold border-2 border-gray-200 rounded-full">
-                        <img [src]="guarantorDetailsInfo()?.profilePicture" alt="Profile Picture" class="w-full h-full object-cover rounded-full" *ngIf="guarantorDetailsInfo()?.profilePicture; else noProfilePicture" />
+                        <img [src]="guarantorDetailsInfo()?.profilePicture || imagePreview()" alt="Profile Picture" class="w-full h-full object-cover rounded-full" *ngIf="guarantorDetailsInfo()?.profilePicture; else noProfilePicture" />
                         <ng-template #noProfilePicture>
                             <div class="w-full text-xl text-center text-gray-100 rounded-full" style="line-height: 120px; background-color: #0c5460;">
                                 {{ guarantorDetailsInfo()?.firstName?.charAt(0) }}{{ guarantorDetailsInfo()?.lastName?.charAt(0) }}
                             </div>
                         </ng-template>
                     </div>
-                    <div class="w-[150px] flex items-center justify-center flex-col gap-3">
+                    <div class="w-[250px] flex items-center justify-center flex-col gap-3">
                         <p class="text-sm text-gray-700 font-semibold">Changer la photo</p>
+                        <input type="file" class="text-xs font-semibold border-2 border-gray-300 rounded-md cursor-pointer" style="padding: 5px;" (change)="onImageSelected($event)" />
+
                         <button
                             class="w-full flex items-center justify-center gap-2 text-xs text-blue-600 font-semibold bg-white border border-blue-300 shadow-sm rounded-md cursor-pointer"
                             style="padding: 5px 0;"
+                            (click)="onUpload()"
                         >
+                        @if (isUploading()) {
+                            <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Téléchargement de la photo...
+                        }
+                        @else {
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-from-line-icon lucide-arrow-up-from-line">
                                 <path d="m18 9-6-6-6 6"/>
                                 <path d="M12 3v14"/>
                                 <path d="M5 21h14"/>
                             </svg>
                             Uploader la photo
+                        }
                         </button>
                     </div>
                 </div>

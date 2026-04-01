@@ -1,6 +1,7 @@
 import { Supplier, SupplierResponse } from "./supplier.models";
 
 export interface Guarantor {
+    id: number;
     firstName: string;
     lastName: string;
     birthDate: string; 
@@ -20,4 +21,8 @@ export interface GuarantorResponse {
     firstName: string;
     lastName: string;
     email: string; 
+}
+
+export interface GuarantorProfilePictureUpdateRequest {
+    file: File;
 }

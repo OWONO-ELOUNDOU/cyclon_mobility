@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Guarantor, GuarantorResponse } from '../../shared/models/guarantor.models';
+import { Guarantor, GuarantorProfilePictureUpdateRequest, GuarantorResponse } from '../../shared/models/guarantor.models';
 import { environment } from '../../environments/environment';
 import { LoginResponse } from '../../shared/models/Auth.models';
 
@@ -36,6 +36,16 @@ export class GuarantorService {
     return this.http.put<GuarantorResponse>(`${this.apiUrl}/${id}`, request, { headers: this.headerOptions });
   }
 
+  // Upload de la photo de profile
+  uploadProfilePicture(id: number, fileData: GuarantorProfilePictureUpdateRequest): Observable<string> {
+    const formData = this.toFormData(fileData);
+    return this.http.post<string>(`${this.apiUrl}/${id}/profile-picture`, formData, {
+      headers: {
+        'Authorization': `Bearer ${this.currentUser.access_token}`
+      }
+    });
+  }
+
   // Suppression d'un garant
   deleteGuarantor(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.headerOptions });
@@ -44,5 +54,29 @@ export class GuarantorService {
   // Récupération de la liste de tous les garants
   getAllGuarantors(): Observable<Guarantor[]> {
     return this.http.get<Guarantor[]>(this.apiUrl, { headers: this.headerOptions });
+  }
+
+  /**
+   * Convertit un objet en FormData.
+   * Gère les fichiers et sérialise les objets imbriqués en JSON.
+   */
+  private toFormData(data: any): FormData {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const value = data[key];
+        if (value !== null && value !== undefined) {
+          if (value instanceof File) {
+            formData.append(key, value);
+          } else if (typeof value === 'object') {
+            formData.append(key, JSON.stringify(value));
+          } else {
+            formData.append(key, String(value));
+          }
+        }
+      }
+    }
+    return formData;
   }
 }
