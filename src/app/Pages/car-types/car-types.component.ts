@@ -82,6 +82,11 @@ export class CarTypesComponent implements OnInit {
     this.displayDialog.set(true);
   }
 
+  viewCarType(carType: CarType) {
+    this.carType.set({ ...carType });
+    this.displayDialog.set(true);
+  }
+
   deleteCarType(carType: CarType) {
     this.confirmationService.confirm({
       message: `Êtes-vous sûr de vouloir supprimer "${carType.label}"?`,
@@ -89,18 +94,26 @@ export class CarTypesComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         // Call service to delete car type
+        this.isLoading.set(true);
+        this.carTypesService.deleteCarType(carType.id).subscribe({
+          next: (response) => {
+            this.isLoading.set(false);
+            this.showMessage('success', `Car Type "${carType.label}" supprimé avec succès!`);
+          },
+          error: (error) => {
+            this.isLoading.set(false);
+            console.log(error.message);
+          },
+          complete: () => {
+            this.loadCarTypes();
+          }
+        });
         this.messageService.add({ severity: 'success', summary: 'Supprimé', detail: `Car Type "${carType.label}" supprimé.` });
-        this.loadCarTypes();
       },
       reject: () => {
         this.messageService.add({ severity: 'info', summary: 'Annulée', detail: 'Suppression annulée.' });
       }
     });
-  }
-
-  saveCarType() {
-    console.log('car type form: ', this.carTypeForm.value);
-
   }
 
   /**
@@ -131,6 +144,7 @@ export class CarTypesComponent implements OnInit {
         },
         complete: () => {
           this.displayDialog.set(false);
+          this.isNew.set(true);
         }
       });
     } catch (error) {
