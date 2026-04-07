@@ -4,41 +4,13 @@
             <app-user-card [id]="d.id" [driver]="d" />
         }
     }
-    <!--
-    <p-table [value]="driversList()" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]" class="p-datatable-sm">
-        <ng-template #header>
-            <tr class="w-full bg-gray-100">
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Nom</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Téléphone</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Email</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">date de Naissance</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Adresse</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Numéro CNI</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Expiration CNI</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Expiration Permis</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">Localisation</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 10px;">action</td>
-            </tr>
-        </ng-template>
-        <ng-template #body let-user>
-            <tr>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.fullName }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.phone }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.email }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.birthDate }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.adress }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.cniNumber }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.cniExpireDate }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.driverLicenceExpireDate }}</td>
-                <td class="text-xs text-gray-600 font-semibold" style="padding: 20px;">{{ user.location }}</td>
-                <td class="text-xs text-center text-gray-600 font-semibold cursor-pointer" style="padding: 20px;" (click)="navigateToDetails(user.id)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye">
-                        <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-    -->
+    @else {
+        <div class="w-full h-[200px] flex items-center justify-center gap-2 flex-col">
+            <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="text-xs text-gray-600 font-semibold">Chargement des conducteurs</p>
+        </div>
+    }
 </div>

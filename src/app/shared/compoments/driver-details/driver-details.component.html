@@ -1,194 +1,214 @@
-<div class="driver-details-container">
-    <div class="header">
+<div class="driver-details-container" style="padding: 0 10px;">
+    <div class="header w-full flex items-center justify-between mb-6 border-b border-gray-300" style="padding-bottom: 10px;">
         <app-navbar [pageTitle]="title()" />
+
+        <button class="w-[150px] h-[30px] text-xs text-blue-600 font-semibold bg-white border border-blue-300 shadow-sm rounded-md cursor-pointer" (click)="navigateTo('driver/form')">
+            Modifier
+        </button>
     </div>
-    <div class="profile-picture flex items-center justify-start gap-6 mb-6">
-        <img
-            [src]="driver()?.profilePicture ?? imagePreview()"
-            width="150px"
-            height="150px"
-            class="border border-gray-300 rounded-full object-cover"
-            alt="Profile Picture"
-            *ngIf="driver()?.profilePicture || imagePreview(), else noProfilePicture"
-        >
-        <ng-template #noProfilePicture>
-            <div class="w-[150px] h-[150px] flex items-center justify-center text-3xl text-white font-semibold bg-black rounded-full">
-                {{ driver()?.fullName?.charAt(0) }}{{ driver()?.fullName?.charAt(1) }}
-            </div>
-        </ng-template>
-        <div class="form w-[250px]">
-            <h2 class="text-lg font-semibold mb-2" style="margin-bottom: 10px;">Uploader une Image</h2>
-            <input type="file" class="w-full text-xs font-semibold border border-gray-300 cursor-pointer" style="margin-bottom: 10px; padding: 5px;" (change)="onImageSelected($event)">
 
-            <div *ngIf="hasMessage()">
-                <app-toast-message [state]="state()" [message]="message()" />
-            </div>
+    <div *ngIf="isLoading(); else driverDetailsInfo" class="w-full h-full flex items-center justify-center gap-4">
+        <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <p class="text-sm text-gray-600 font-semibold">Chargement des Informations du conducteurs...</p>
+    </div>
 
-            <button
-                [ngClass]="isUploading() ? 'text-gray-300 border-gray-300' : 'text-blue-600 border-blue-100'"
-                class="w-full flex items-center justify-center gap-3 text-xs font-semibold bg-white border shadow-sm rounded-md cursor-pointer"
-                style="padding: 5px 0;"
-                (click)="onUpload()"
+    <ng-template #driverDetailsInfo>
+        <div class="profile-picture flex items-center justify-start gap-6 mb-6" >
+            <img
+                [src]="driver()?.profilePicture ?? imagePreview()"
+                width="150px"
+                height="150px"
+                class="border border-gray-300 rounded-full object-cover"
+                alt="Profile Picture"
+                *ngIf="driver()?.profilePicture || imagePreview(), else noProfilePicture"
             >
-                @if (isUploading()) {
-                    Uploading...
-                }
-                @else {
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-from-line-icon lucide-arrow-up-from-line">
-                        <path d="m18 9-6-6-6 6"/>
-                        <path d="M12 3v14"/>
-                        <path d="M5 21h14"/>
-                    </svg>
-                    Uploader la photo
-                }
-            </button>
-        </div>
-    </div>
-    <div class="personal-info">
-        <h3 class="text-2xl font-semibold">Informations Personnelles</h3>
-
-        <div class="infos w-full flex items-start justify-between flex-wrap gap-3">
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Nom Complet</label>
-                <p class="text-sm"><strong>{{ driver()?.fullName }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Numéro de téléphone</label>
-                <p class="text-sm"><strong>{{ driver()?.phone }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Adresse mail</label>
-                <p class="text-sm"><strong>{{ driver()?.email }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Date de naissance</label>
-                <p class="text-sm"><strong>{{ driver()?.birthDate }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Adresse</label>
-                <p class="text-sm"><strong>{{ driver()?.adress }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Localisation</label>
-                <p class="text-sm"><strong>{{ driver()?.location }}</strong></p>
-            </div>
-        </div>
-    </div>
-    <div class="cni-info">
-        <h3>Informations status du driver</h3>
-
-        <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Vérifié</label>
-                <p class="text-sm" style="margin-bottom: 10px;"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
-                <app-driver-verification *ngIf="driver() && !driver()?.isDriverVerification" [place]="driver()?.location" />
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Validé</label>
-                <p class="text-sm" style="margin-bottom: 10px;"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
-                <app-driver-validation *ngIf="driver() && !driver()?.isDriverValidated" />
-            </div>
-        </div>
-    </div>
-    <div class="cni-info">
-        <div class="w-full flex items-start justify-start flex-wrap gap-4">
-            <h3>Quiz</h3>
-            <button class="w-[150px] text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleQuizVisibility()">Ajouter une note</button>
-        </div>
-
-        <div *ngIf="isQuizVisible()" class="infos w-full flex items-start justify-start flex-wrap gap-14">
-            <app-user-quiz-form [id]="driverId()" />
-        </div>
-    </div>
-    <div class="cni-info">
-        <h3>Informations Carte Nationale Identité (CNI)</h3>
-
-        <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">CNI</label>
-                <p class="text-sm"><strong>{{ driver()?.haveCni ? 'Oui' : 'Non' }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Numéro de CNI</label>
-                <p class="text-sm"><strong>{{ driver()?.cniNumber }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Date expiration CNI</label>
-                <p class="text-sm"><strong>{{ driver()?.cniExpireDate }}</strong></p>
-            </div>
-        </div>
-    </div>
-    <div class="cni-info">
-        <h3>Informations Permis de conduire</h3>
-
-        <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Permis de conduire</label>
-                <p class="text-sm"><strong>{{ driver()?.haveDriverLicence ? 'Oui' : 'Non' }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Débitér les frais pour le permis</label>
-                <p class="text-sm"><strong>{{ driver()?.driverLicenceDebit ? 'Oui' : 'Non' }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Date expiration Permis</label>
-                <p class="text-sm"><strong>{{ driver()?.driverLicenceExpireDate }}</strong></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="cni-info">
-        <div class="w-full flex items-start justify-start flex-wrap gap-4">
-            <h3>Documents Joints</h3>
-            <button class="w-[200px] text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleUploaderVisibility()">Ajouter un document</button>
-        </div>
-        
-        <div class="w-full flex items-center justify-start flex-wrap gap-10">
-            <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
-                @if (driver()?.files) {
-                    @for (f of driver()?.files; track $index) {
-                        <div class="box w-[350px] h-[150px] border border-gray-300 rounded-md">
-                            <img [src]="f.path" class="w-full h-full object-cover" [alt]="f.originalName" srcset="">
-                        </div>
-                    }
-                } @else {
-                    <p class="text-sm">Aucun document joint</p>
-                }
-            </div>
-            <div *ngIf="showFileUploader()">
-                <app-file-uploader [driverId]="driverId()" [hasCategory]="true" />
-            </div>
-        </div>
-    </div>
-
-    <div class="cni-info">
-        <h3>Informations garant et autres</h3>
-
-        <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Garant</label>
-                <p class="text-sm"><strong>{{ driver()?.haveGuarantor ? 'Oui' : 'Non' }}</strong></p>
+            <ng-template #noProfilePicture>
+                <div class="w-[150px] h-[150px] flex items-center justify-center text-3xl text-white font-semibold bg-black rounded-full">
+                    {{ driver()?.fullName?.charAt(0) }}{{ driver()?.fullName?.charAt(1) }}
+                </div>
+            </ng-template>
+            <div class="form w-[250px]">
+                <h2 class="text-lg font-semibold mb-2" style="margin-bottom: 10px;">Uploader une Image</h2>
+                <input type="file" class="w-full text-xs font-semibold border border-gray-300 cursor-pointer" style="margin-bottom: 10px; padding: 5px;" (change)="onImageSelected($event)">
+    
+                <div *ngIf="hasMessage()">
+                    <app-toast-message [state]="state()" [message]="message()" />
+                </div>
+    
                 <button
-                    *ngIf="!driver()?.haveGuarantor"
-                    (click)="navigateTo('guarantor/form')"
-                    class="text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer"
-                    style="padding: 5px 15px; margin-top: 10px;"
+                    [ngClass]="isUploading() ? 'text-gray-300 border-gray-300' : 'text-blue-600 border-blue-100'"
+                    class="w-full flex items-center justify-center gap-3 text-xs font-semibold bg-white border shadow-sm rounded-md cursor-pointer"
+                    style="padding: 5px 0;"
+                    (click)="onUpload()"
                 >
-                    Joindre un garant
+                    @if (isUploading()) {
+                        Uploading...
+                    }
+                    @else {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-from-line-icon lucide-arrow-up-from-line">
+                            <path d="m18 9-6-6-6 6"/>
+                            <path d="M12 3v14"/>
+                            <path d="M5 21h14"/>
+                        </svg>
+                        Uploader la photo
+                    }
                 </button>
             </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Driver validé</label>
-                <p class="text-sm"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Test driver validé</label>
-                <p class="text-sm"><strong>{{ driver()?.isDriverValidatedTest ? 'Oui' : 'Non' }}</strong></p>
-            </div>
-            <div class="box">
-                <label class="text-xs text-gray-400 font-semibold">Driver vérifié</label>
-                <p class="text-sm"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
+        </div>
+        <div class="personal-info">
+            <h3 class="text-2xl font-semibold">Informations Personnelles</h3>
+    
+            <div class="infos w-full flex items-start justify-between flex-wrap gap-3">
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Nom Complet</label>
+                    <p class="text-sm"><strong>{{ driver()?.fullName }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Numéro de téléphone</label>
+                    <p class="text-sm"><strong>{{ driver()?.phone }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Adresse mail</label>
+                    <p class="text-sm"><strong>{{ driver()?.email }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Date de naissance</label>
+                    <p class="text-sm"><strong>{{ driver()?.birthDate }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Adresse</label>
+                    <p class="text-sm"><strong>{{ driver()?.adress }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Localisation</label>
+                    <p class="text-sm"><strong>{{ driver()?.location }}</strong></p>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="cni-info">
+            <h3>Informations status du driver</h3>
+    
+            <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Vérifié</label>
+                    <p class="text-sm" style="margin-bottom: 10px;"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
+                    <app-driver-verification *ngIf="driver() && !driver()?.isDriverVerification" [place]="driver()?.location" />
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Validé</label>
+                    <p class="text-sm" style="margin-bottom: 10px;"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
+                    <app-driver-validation *ngIf="driver() && !driver()?.isDriverValidated" />
+                </div>
+            </div>
+        </div>
+        <div class="cni-info">
+            <div class="w-full flex items-start justify-start flex-wrap gap-4">
+                <h3>Quiz</h3>
+                <button class="w-[150px] text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleQuizVisibility()">Ajouter une note</button>
+            </div>
+    
+            <div *ngIf="isQuizVisible()" class="infos w-full flex items-start justify-start flex-wrap gap-14">
+                <app-user-quiz-form [id]="driverId()" />
+            </div>
+        </div>
+        <div class="cni-info">
+            <h3>Informations Carte Nationale Identité (CNI)</h3>
+    
+            <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">CNI</label>
+                    <p class="text-sm"><strong>{{ driver()?.haveCni ? 'Oui' : 'Non' }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Numéro de CNI</label>
+                    <p class="text-sm"><strong>{{ driver()?.cniNumber }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Date expiration CNI</label>
+                    <p class="text-sm"><strong>{{ driver()?.cniExpireDate }}</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="cni-info">
+            <h3>Informations Permis de conduire</h3>
+    
+            <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Permis de conduire</label>
+                    <p class="text-sm"><strong>{{ driver()?.haveDriverLicence ? 'Oui' : 'Non' }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Débitér les frais pour le permis</label>
+                    <p class="text-sm"><strong>{{ driver()?.driverLicenceDebit ? 'Oui' : 'Non' }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Date expiration Permis</label>
+                    <p class="text-sm"><strong>{{ driver()?.driverLicenceExpireDate }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Type de véhicule</label>
+                    <p class="text-sm"><strong>{{ driver()?.carType?.label }}</strong></p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="cni-info">
+            <div class="w-full flex items-start justify-start flex-wrap gap-4">
+                <h3>Documents Joints</h3>
+                <button class="w-[200px] text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer" style="padding: 5px 0;" (click)="toggleUploaderVisibility()">Ajouter un document</button>
+            </div>
+            
+            <div class="w-full flex items-center justify-start flex-wrap gap-10">
+                <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+                    @if (driver()?.files) {
+                        @for (f of driver()?.files; track $index) {
+                            <div class="box w-[350px] h-[150px] border border-gray-300 rounded-md">
+                                <img [src]="f.path" class="w-full h-full object-cover" [alt]="f.originalName" srcset="">
+                            </div>
+                        }
+                    } @else {
+                        <p class="text-sm">Aucun document joint</p>
+                    }
+                </div>
+                <div *ngIf="showFileUploader()">
+                    <app-file-uploader [driverId]="driverId()" [hasCategory]="true" />
+                </div>
+            </div>
+        </div>
+    
+        <div class="cni-info">
+            <h3>Informations garant et autres</h3>
+    
+            <div class="infos w-full flex items-start justify-start flex-wrap gap-14">
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Garant</label>
+                    <p class="text-sm"><strong>{{ driver()?.haveGuarantor ? 'Oui' : 'Non' }}</strong></p>
+                    <button
+                        *ngIf="!driver()?.haveGuarantor"
+                        (click)="navigateTo('guarantor/form')"
+                        class="text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer"
+                        style="padding: 5px 15px; margin-top: 10px;"
+                    >
+                        Joindre un garant
+                    </button>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Driver validé</label>
+                    <p class="text-sm"><strong>{{ driver()?.isDriverValidated ? 'Oui' : 'Non' }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Test driver validé</label>
+                    <p class="text-sm"><strong>{{ driver()?.isDriverValidatedTest ? 'Oui' : 'Non' }}</strong></p>
+                </div>
+                <div class="box">
+                    <label class="text-xs text-gray-400 font-semibold">Driver vérifié</label>
+                    <p class="text-sm"><strong>{{ driver()?.isDriverVerification ? 'Oui' : 'Non' }}</strong></p>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    
 </div>

@@ -31,7 +31,9 @@ export class DriverDetailsComponent implements OnInit {
   message = signal<string>('');
   driverId = signal<number>(0);
   imagePreview = signal<string>('');
+  isLoading = signal<boolean>(false);
   hasMessage = signal<boolean>(false);
+  isDeleting = signal<boolean>(false);
   isUploading = signal<boolean>(false);
   isQuizVisible = signal<boolean>(false);
   selectedImage = signal<File | null>(null);
@@ -47,17 +49,21 @@ export class DriverDetailsComponent implements OnInit {
   }
 
   fetchDriverDetails(): void {
+    this.isLoading.set(true);
     try {
       this.supplierService.getDriverDetails(this.driverId()).subscribe({
         next: (response: SupplierResponse) => {
+          this.isLoading.set(false);
           this.driver.set(response);
           console.log(this.driver());
         },
         error: (error) => {
+          this.isLoading.set(false);
           console.log(error.message);
         }
       });
     } catch (error) {
+      this.isLoading.set(false);
       console.log(error);
     }
   }
@@ -101,6 +107,28 @@ export class DriverDetailsComponent implements OnInit {
     } catch (error) {
       console.log(error);
       this.showMessage('error', 'Une erreur est survenue lors du téléchargement de l\'image');
+    }
+  }
+
+  onDelete(id: number) {
+    this.isDeleting.set(true);
+
+    try {
+      this.supplierService.deleteDriver(id).subscribe({
+        next: () => {
+          this.isDeleting.set(false);
+          this.showMessage('success', 'Driver supprimé avec succès');
+        },
+        error: (error) => {
+          this.isDeleting.set(false);
+          this.showMessage('error', 'Erreur lors de la suppression du driver');
+          console.log(error.message);
+        }
+      });
+
+    } catch (error) {
+      this.isDeleting.set(false);
+      console.log(error);
     }
   }
 

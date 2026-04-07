@@ -1,3 +1,4 @@
+import { CarType } from "./car-types-models";
 import { FileTypeResponse } from "./file-type.models";
 
 export interface Supplier {
@@ -42,7 +43,7 @@ export interface SupplierResponse {
     adress: string;
     email: string;
     files: FileTypeResponse[];
-    carType: string;
+    carType: CarType;
     phone: string;
     isAdressConfirmation: boolean;
     isNeigboorhoodConfirmation: boolean;

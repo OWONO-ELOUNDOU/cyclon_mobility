@@ -30,6 +30,7 @@ export class CarTypesComponent implements OnInit {
   message = signal<string>('');
   isNew = signal<boolean>(true);
   isLoading = signal<boolean>(false);
+  isDeleting = signal<boolean>(false);
   isFetching = signal<boolean>(false);
   hasMessage = signal<boolean>(false);
   carTypesList = signal<CarType[]>([]);
@@ -94,14 +95,14 @@ export class CarTypesComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         // Call service to delete car type
-        this.isLoading.set(true);
+        this.isDeleting.set(true);
         this.carTypesService.deleteCarType(carType.id).subscribe({
           next: (response) => {
-            this.isLoading.set(false);
+            this.isDeleting.set(false);
             this.showMessage('success', `Car Type "${carType.label}" supprimé avec succès!`);
           },
           error: (error) => {
-            this.isLoading.set(false);
+            this.isDeleting.set(false);
             console.log(error.message);
           },
           complete: () => {
