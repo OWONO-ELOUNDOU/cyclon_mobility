@@ -8,9 +8,9 @@
     .personal-info,
     .cni-info {
         &:not(.profile-picture) {
-            padding: 20px;
+            padding: 15px;
             margin-bottom: 20px;
-            border-radius: 15px;
+            border-radius: 10px;
             border: 2px solid lightgray;
             background-color: white;
         }

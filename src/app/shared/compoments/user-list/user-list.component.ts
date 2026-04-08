@@ -14,8 +14,12 @@ import { UserService } from '../../../services/User/user.service';
   styleUrl: './user-list.component.scss'
 })
 export class UserListComponent implements OnInit {
+  state = signal<string>('');
+  message = signal<string>('');
   usersList = signal<User[]>([]);
   isLoading = signal<boolean>(false);
+  isDeleting = signal<boolean>(false);
+  hasMessage = signal<boolean>(false);
 
   private userService = inject(UserService);
 
@@ -44,19 +48,33 @@ export class UserListComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.isLoading.set(true);
+    this.isDeleting.set(true);
     
     try {
       this.userService.deleteUser(id).subscribe({
-        next: () => window.location.reload(),
+        next: () => {
+          this.isDeleting.set(false);
+          this.showMessage('success', 'Utilisateur supprimé avec succès');
+          window.location.reload()
+        },
         error: (error) => {
-          alert('Erreur lors de la suppression');
-          this.isLoading.set(false);
+          this.isDeleting.set(false);
+          console.log(error.message);
+          this.showMessage('error', `Erreur lors de la suppression de l\'utilisateur`);
         },
       })
     } catch (error) {
+      this.isDeleting.set(false);
       alert('Erreur lors de la suppression');
-      this.isLoading.set(false);
     }
+  }
+
+  showMessage(type: 'success' | 'error' | 'info', details: string) {
+    this.hasMessage.set(true);
+    this.state.set(type);
+    this.message.set(details);
+    setTimeout(() => {
+      this.hasMessage.set(false);
+    }, 3000);
   }
 }
