@@ -1,8 +1,16 @@
 <div class="table-container w-full flex items-start justify-start flex-wrap gap-4">
-    @if (driversList() && driversList().length > 0) {
-        @for (d of driversList(); track d.id) {
-            <app-user-card [id]="d.id" [driver]="d" />
-        }
+    @if (!isLoading()) {
+        <div class="w-full flex items-start justify-start flex-wrap gap-4" *ngIf="driversList().length > 0; else noDriver">
+            @for (d of driversList(); track d.id) {
+                <app-user-card [id]="d.id" [driver]="d" />
+            }
+        </div>
+        
+        <ng-template #noDriver>
+            <div class="w-full flex items-center justify-center text-lg text-gray-600 font-semibold">
+                Aucun conducteur
+            </div>
+        </ng-template>
     }
     @else {
         <div class="w-full h-[200px] flex items-center justify-center gap-2 flex-col">

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -16,14 +16,14 @@ import { NavbarComponent } from '../navbar/navbar.component';
   templateUrl: './supplier-form.component.html',
   styleUrl: './supplier-form.component.scss'
 })
-export class SupplierFormComponent {
+export class SupplierFormComponent implements OnInit {
   title = signal<string>('conducteurs');
 
   private router = inject(Router);
   private supplierService = inject(SupplierService);
   private carTypesService = inject(CarTypesService);
 
-  carTypes: CarType[] = [];
+  carTypes = signal<CarType[]>([]);
   hasCNI = signal<string>('');
   hasLicence = signal<string>('');
   hasGuarantor = signal<string>('');
@@ -45,7 +45,6 @@ export class SupplierFormComponent {
     adress: new FormControl(''),
     email: new FormControl(''),
     phone: new FormControl(''),
-    carType: new FormControl(''),
     password: new FormControl('SecurePass123!'),
     isAdressConfirmation: new FormControl(false),
     isNeigboorhoodConfirmation: new FormControl(false),
@@ -58,6 +57,10 @@ export class SupplierFormComponent {
 
   constructor() {}
 
+  ngOnInit(): void {
+    //this.fetchCarTypes();
+  }
+
   get f() {
     return this.driverForm.controls;
   }
@@ -69,7 +72,7 @@ export class SupplierFormComponent {
       this.carTypesService.getAllTypes().subscribe({
         next: (data) => {
           this.isFetching.set(false);
-          this.carTypes = data;
+          this.carTypes.set(data);
         },
         error: (error) => {
           this.isFetching.set(false);
@@ -124,18 +127,22 @@ export class SupplierFormComponent {
     }
     if (this.driverForm.valid) {
       console.log(this.driverForm.value);
+      this.isLoading.set(true);
 
       try {
         this.supplierService.createDriver(this.driverForm.value).subscribe({
           next: (data) => {
+            this.isLoading.set(false);
             console.log(data);
             this.router.navigate(['/drivers']);
           },
           error: (error) => {
+            this.isLoading.set(false);
             console.log(error);
           }
         })
       } catch (error) {
+        this.isLoading.set(false);
         console.log(error);
       }
     } else {

@@ -43,11 +43,13 @@ export class QuizListComponent implements OnInit {
         },
         error: (error: any) => {
           this.isFetching.set(false);
+          this.showMessage('error', 'Une erreur est survenue');
           console.log('Error fetching quizzes:', error);
         }
       });
     } catch (error) {
       this.isFetching.set(false);
+      this.showMessage('error', 'Une erreur est survenue');
       console.log('Unexpected error fetching quizzes:', error);
     }
   }
@@ -57,16 +59,19 @@ export class QuizListComponent implements OnInit {
     try {
       this.quizService.deleteQuiz(id).subscribe({
         next: () => {
-          window.location.reload()
+          this.isLoading.set(true);
+          window.location.reload();
         },
         error: (error) => {
-          alert('Erreur lors de la suppression du quiz');
           this.isLoading.set(false);
+          console.log(error.message);
+          this.showMessage('error', 'Une erreur est survenue');
         }
       })
     } catch (error) {
-      alert('une erreur est survenue');
       this.isLoading.set(false);
+      console.log(error);
+      this.showMessage('error', 'Une erreur est survenue');
     }
   }
 

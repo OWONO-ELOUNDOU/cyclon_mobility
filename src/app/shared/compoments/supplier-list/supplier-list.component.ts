@@ -16,6 +16,10 @@ import { SupplierService } from '../../../services/Supplier/supplier.service';
   styleUrl: './supplier-list.component.scss'
 })
 export class SupplierListComponent {
+  state = signal<string>('');
+  message = signal<string>('');
+  hasMessage = signal<string>('');
+  isLoading = signal<boolean>(false);
   driversList = signal<SupplierResponse[]>([]);
   
   private router = inject(Router);
@@ -26,17 +30,21 @@ export class SupplierListComponent {
   }
 
   fetchUsersList() {
+    this.isLoading.set(true);
     try {
       this.supplierService.getAllDrivers().subscribe({
         next: (data) => {
+          this.isLoading.set(false);
           console.log(data);
           this.driversList.set(data);
         },
         error: (error) => {
+          this.isLoading.set(false);
           console.log(error);
         }
       })
     } catch (error) {
+      this.isLoading.set(false);
       console.log(error);
     }
   }

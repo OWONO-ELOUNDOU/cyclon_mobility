@@ -13,6 +13,7 @@ export interface FileTypeResponse {
   path: string;
   size: number;
   uploadedAt: string;
+  url: string;
 }
 
 export interface FileType {
