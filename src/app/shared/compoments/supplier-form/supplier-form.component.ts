@@ -8,6 +8,7 @@ import { SupplierService } from '../../../services/Supplier/supplier.service';
 import { CarTypesService } from '../../../services/car-types/car-types.service';
 
 import { NavbarComponent } from '../navbar/navbar.component';
+import { Supplier } from '../../models/supplier.models';
 
 @Component({
   standalone: true,
@@ -39,7 +40,7 @@ export class SupplierFormComponent implements OnInit {
     cniNumber: new FormControl(''),
     cniExpireDate: new FormControl(''),
     haveDriverLicence: new FormControl(''),
-    haveGuarantor: new FormControl(false),
+    //haveGuarantor: new FormControl(false),
     driverLicenceDebit: new FormControl(false),
     driverLicenceExpireDate: new FormControl('2028-06-30'),
     adress: new FormControl(''),
@@ -126,11 +127,17 @@ export class SupplierFormComponent implements OnInit {
       this.driverForm.patchValue({ cniExpireDate: '' });
     }
     if (this.driverForm.valid) {
-      console.log(this.driverForm.value);
+      const formData = this.driverForm.getRawValue();
+      const createRequest: Supplier = {
+        ... formData,
+        haveGuarantor: this.hasGuarantor() === 'non' ? false : true
+      };
+      console.log('create form', createRequest);
       this.isLoading.set(true);
 
+      
       try {
-        this.supplierService.createDriver(this.driverForm.value).subscribe({
+        this.supplierService.createDriver(createRequest).subscribe({
           next: (data) => {
             this.isLoading.set(false);
             console.log(data);
@@ -145,6 +152,7 @@ export class SupplierFormComponent implements OnInit {
         this.isLoading.set(false);
         console.log(error);
       }
+        
     } else {
       this.markFormGroupTouched(this.driverForm);
     }

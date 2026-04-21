@@ -3,7 +3,16 @@
         <app-navbar [pageTitle]="'Détails garant'" />
     </div>
 
-    <h1 class="text-2xl font-semibold" style="margin-bottom: 30px; color: #0c5460;">Détails du garant</h1>
+    <div class="w-full flex items-center justify-between" style="padding: 0 10px;">
+        <h1 class="text-2xl font-semibold" style="margin-bottom: 30px; color: #0c5460;">Détails du garant</h1>
+        <button
+            class="w-[150px] text-xs text-blue-600 font-semibold bg-white border border-blue-300 shadow-sm rounded-md cursor-pointer"
+            style="padding: 7px 0;"
+            (click)="navigateTo('guarantor/form')"
+        >
+            Modifier
+        </button>
+    </div>
 
     <div class="w-[450px]" *ngIf="hasMessage()" style="margin-top: 20px;">
         <app-toast-message [state]="state()" [message]="message()" />

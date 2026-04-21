@@ -9,8 +9,14 @@
         </span>
     </div>
 
-    <div class="user-avatar w-[110px] h-[110px] flex items-center justify-center bg-black rounded-full">
-        <h1 class="text-5xl text-white font-semibold">{{ driver()?.fullName?.charAt(0) }}{{ driver()?.fullName?.charAt(1) }}</h1>
+    <div class="user-avatar w-[110px] h-[110px] flex items-center justify-center rounded-full">
+        <!--<h1 class="text-5xl text-white font-semibold">{{ driver()?.fullName?.charAt(0) }}{{ driver()?.fullName?.charAt(1) }}</h1>-->
+        <img
+            [src]="driver()?.profilePicture"
+            [alt]="driver()?.fullName"
+            [srcset]="driver()?.profilePicture"
+            class="w-full h-full object-cover rounded-full"
+        />
     </div>
 
 

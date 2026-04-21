@@ -106,6 +106,11 @@ export class GuarantorDetailsComponent implements OnInit {
     setTimeout(() => { this.hasMessage.set(false); }, 3000);
   }
 
+  navigateTo(path: string) {
+    localStorage.setItem('garantorInfo', JSON.stringify(this.guarantorDetailsInfo()));
+    this.router.navigate([`${path}`]);
+  }
+
   navigateToDriverDetails(driverId: number | undefined) {
     if (driverId !== undefined) {
       localStorage.setItem('driverId', driverId.toString());

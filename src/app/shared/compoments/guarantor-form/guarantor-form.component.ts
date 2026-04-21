@@ -7,6 +7,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { ToastMessageComponent } from '../toast-message/toast-message.component';
 
 import { GuarantorService } from '../../../services/Guarantor/guarantor.service';
+import { Guarantor } from '../../models/guarantor.models';
 
 @Component({
   selector: 'app-guarantor-form',
@@ -20,12 +21,17 @@ export class GuarantorFormComponent implements OnInit {
   private guarantorService = inject(GuarantorService);
 
   // Déclaration de variables
+  garantor!: Guarantor;
   driverId = signal<number>(0);
+  currentMode = signal<string>('');
   title = signal<string>('Garant');
-  state = signal<string>('error');
+
+  // Gestion du chargement et affichage des messages d'erreur
   errorMessage = signal<string>('');
   isLoading = signal<boolean>(false);
   hasMessage = signal<boolean>(false);
+  state = signal<'success' | 'info' | 'error'>('success');
+
   imagePreview = signal<string | null>(null);
 
   // Définition du formulaire
@@ -46,21 +52,47 @@ export class GuarantorFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.driverId.set(localStorage.getItem('driverId') ? Number(localStorage.getItem('driverId')) : 0);
+    this.checkMode();
   }
 
   get f() {
     return this.guarantorForm.controls;
   }
 
+  // Vérifier le mode d'édition
+  checkMode() {
+    this.garantor = JSON.parse(localStorage.getItem('garantorInfo') || '{}');
+    if(this.garantor) {
+      this.currentMode.set('edit');
+      console.log(this.currentMode());
+      console.log('current Garantor', this.garantor);
+    } else {
+      this.currentMode.set('create');
+      console.log(this.currentMode());
+    }
+  }
+
   onSubmit() {
+    if (this.currentMode() === 'create') {
+      this.createGarantor();
+    } else {
+      this.updateGarantor();
+    }
+  }
+
+  // Enregistrement d'un nouveau garant
+  createGarantor() {
+    // Vérification de la validité du formulaire
     if (this.guarantorForm.invalid) {
       this.markFormGroupTouched(this.guarantorForm);
       return;
     }
 
+    // Ajout de l'identifiant conducteur
     this.guarantorForm.patchValue({
       driver_id: this.driverId()
     });
+
     console.log(this.guarantorForm.value);
     this.isLoading.set(true);
 
@@ -68,23 +100,49 @@ export class GuarantorFormComponent implements OnInit {
       this.guarantorService.createGuarantor(this.guarantorForm.value).subscribe({
         next: (response) => {
           this.isLoading.set(true);
-          this.hasMessage.set(true);
           this.showToastMessage('success', 'Garant enregistré avec succès');
           console.log('Guarantor created successfully:', response);
         },
         error: (error) => {
           this.isLoading.set(true);
-          this.hasMessage.set(true);
           this.showToastMessage('error', 'Erreur lors enregistrement du garant');
           console.error('Error creating guarantor:', error);
         }
       });
     } catch (error) {
       this.isLoading.set(true);
-      this.hasMessage.set(true);
       this.showToastMessage('error', 'Une erreur est survenue');
     }
-    
+  }
+
+  // Modification des informations d'un garant
+  updateGarantor() {
+    this.isLoading.set(true);
+
+    try {
+      this.guarantorService.updateGuarantor(this.garantor.id, this.guarantorForm.value).subscribe({
+        next: (response) => {
+          this.isLoading.set(false);
+          console.log(response);
+          this.showToastMessage('success', 'Informations du garant modifiées avec succès');
+          this.clearCurrentMode();
+        },
+        error: (error) => {
+          this.isLoading.set(false);
+          console.log(error.message);
+          this.showToastMessage('error', `${error.message}`);
+        }
+      })
+    } catch (error) {
+      this.isLoading.set(false);
+      console.log(error);
+      this.showToastMessage('success', `${error} est survenue`);
+    }
+  }
+
+  clearCurrentMode() {
+    this.currentMode.set('create');
+    localStorage.removeItem('garantorInfo');
   }
 
   onCancel() {
@@ -92,9 +150,11 @@ export class GuarantorFormComponent implements OnInit {
     this.navigateTo('suppliers');
   }
 
-  showToastMessage(type: string, details: string) {
+  showToastMessage(type: 'success' | 'info' | 'error', details: string) {
+    this.hasMessage.set(true);
     this.state.set(type);
     this.errorMessage.set(details);
+    setTimeout(() => { this.hasMessage.set(false) }, 3000)
   }
 
   navigateTo(path: string) {
