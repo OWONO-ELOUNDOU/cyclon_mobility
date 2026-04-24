@@ -1,4 +1,194 @@
 <div class="table-container w-full flex items-start justify-start flex-wrap gap-4">
+    <div class="filters max-w-[850px] w-full border border-gray-300 bg-white shadow-sm rounded-md" style="padding: 10px;">
+        <h3
+            class="text-xl text-gray-600 font-semibold flex items-center justify-start gap-3"
+            style="margin-bottom: 35px;"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-filter-icon lucide-list-filter">
+                <path d="M2 5h20"/>
+                <path d="M6 12h12"/>
+                <path d="M9 19h6"/>
+            </svg>
+            Filtres
+        </h3>
+
+        <div class="flex items-start justify-start flex-wrap gap-4">
+            <div
+                class="w-[150px] flex items-center justify-between text-xs text-gray-500 font-semibold border border-gray-200 rounded-sm cursor-pointer"
+                (click)="changeSortOption('all')"
+                style="padding: 5px;"
+            >
+                Tous
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-wide-narrow-icon lucide-arrow-down-wide-narrow">
+                    <path d="m3 16 4 4 4-4"/>
+                    <path d="M7 20V4"/>
+                    <path d="M11 4h10"/>
+                    <path d="M11 8h7"/>
+                    <path d="M11 12h4"/>
+                </svg>
+            </div>
+            <div
+                class="w-[150px] flex items-center justify-between text-xs text-gray-500 font-semibold border border-gray-200 rounded-sm cursor-pointer"
+                (click)="changeSortOption('pending')"
+                style="padding: 5px; color: #a98306;"
+            >
+                En attente
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fdd140" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dashed-icon lucide-circle-dashed">
+                    <path d="M10.1 2.182a10 10 0 0 1 3.8 0"/>
+                    <path d="M13.9 21.818a10 10 0 0 1-3.8 0"/>
+                    <path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/>
+                    <path d="M2.182 13.9a10 10 0 0 1 0-3.8"/>
+                    <path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/>
+                    <path d="M21.818 10.1a10 10 0 0 1 0 3.8"/>
+                    <path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/>
+                    <path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/>
+                </svg>
+            </div>
+            <div
+                class="w-[150px] flex items-center justify-between text-xs text-gray-500 font-semibold border border-gray-200 rounded-sm cursor-pointer"
+                (click)="changeSortOption('verified')"
+                style="padding: 5px; color: #0c5460;"
+            >
+                Vérifié
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0c5460" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
+                    <path d="M20 6 9 17l-5-5"/>
+                </svg>
+            </div>
+            <div
+                class="w-[150px] flex items-center justify-between text-xs text-gray-500 font-semibold border border-gray-200 rounded-sm cursor-pointer"
+                (click)="changeSortOption('validated')"
+                style="padding: 5px; color: #05c02d;"
+            >
+                Validé
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#05c02d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-check-icon lucide-check-check">
+                    <path d="M18 6 7 17l-5-5"/>
+                    <path d="m22 10-7.5 7.5L13 16"/>
+                </svg>
+            </div>
+            <div
+                class="w-[150px] flex items-center justify-between text-xs text-gray-500 font-semibold border border-gray-200 rounded-sm cursor-pointer"
+                (click)="changeSortOption('confirmed')"
+                style="padding: 5px; color: #247afa;"
+            >
+                Confirmé
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#247afa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big-icon lucide-circle-check-big">
+                    <path d="M21.801 10A10 10 0 1 1 17 3.335"/>
+                    <path d="m9 11 3 3L22 4"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="search max-w-[850px] w-full border border-gray-300 bg-white shadow-sm rounded-md" style="padding: 10px;">
+        <div class="w-full flex items-center justify-between" style="margin-bottom: 15px;">
+            <h3
+                class="text-xl text-gray-600 font-semibold flex items-center justify-start gap-3"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-search-icon lucide-user-round-search">
+                    <circle cx="10" cy="8" r="5"/>
+                    <path d="M2 21a8 8 0 0 1 10.434-7.62"/>
+                    <circle cx="18" cy="18" r="3"/>
+                    <path d="m22 22-1.9-1.9"/>
+                </svg>
+                Recherche
+            </h3>
+
+            <div class="search-options flex items-center justify-center gap-3">
+                <div
+                    (click)="getSearchOption('email')"
+                    class="w-auto flex items-center justify-center gap-2 border border-gray-200 rounded-full cursor-pointer" style="padding: 8px;"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-at-sign-icon lucide-at-sign">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/>
+                    </svg>
+                    <p class="text-xs text-gray-700 font-semibold">Email</p>
+                </div>
+                <div
+                    (click)="getSearchOption('phone')"
+                    class="w-auto flex items-center justify-center gap-2 border border-gray-200 rounded-full cursor-pointer" style="padding: 8px;"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone">
+                        <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/>
+                    </svg>
+                    <p class="text-xs text-gray-700 font-semibold">Téléphone</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-box w-full flex items-center justify-between gap-2">
+            <input
+                type="text"
+                placeholder="chercher un conducteur"
+                style="padding: 0 10px;"
+                [(ngModel)]="searchValue"
+                class="w-2/3 h-[35px] text-xs text-gray-700 font-semibold border border-gray-300 placeholder:text-gray-400  rounded-full"
+            />
+            <div class="w-1/4 flex items-center justify-center gap-2">
+                <button
+                    (click)="fetchDriverByOption()"
+                    style="padding: 7px 0;"
+                    class="w-full flex items-center justify-center gap-2 text-xs text-blue-600 font-semibold bg-white border border-gray-300 shadow-sm rounded-md cursor-pointer"
+                >
+                    @if (isSearching()) {
+                        <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Recherche en cours...
+                    }
+                    @else {
+                        Rechercher
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="driver-search-result max-w-[850px] w-full border border-gray-300 bg-white shadow-sm rounded-md"
+        style="padding: 10px; margin: 10px 0;"
+        *ngIf="driverResult"
+    >
+        <h3
+            class="text-xl text-gray-600 font-semibold flex items-center justify-start gap-3"
+            style="margin-bottom: 10px;"
+        >
+            Résultat de la recherche
+        </h3>
+
+        <div
+            class="w-full flex items-center justify-start gap-8 bg-gray-100 rounded-md cursor-pointer"
+            style="padding: 5px;"
+            (click)="navigateToDetails(driverResult.id)"
+        >
+            <img
+                [src]="driverResult.profilePicture"
+                [alt]="driverResult.fullName"
+                class="w-[100px] h-[100px] border border-gray-200 rounded-full"
+            />
+
+            <div class="result-details w-full max-w-[500px] flex items-start justify-start flex-col gap-2">
+                <div class="flex items-center justify-start gap-3">
+                    <label class="text-xs text-gray-700 font-semibold">Nom complet:</label>
+                    <p class="text-xs text-700 font-semibold">{{ driverResult.fullName }}</p>
+                </div>
+                <div class="flex items-center justify-start gap-3">
+                    <label class="text-xs text-gray-700 font-semibold">Téléphone:</label>
+                    <p class="text-xs text-700 font-semibold">{{ driverResult.phone }}</p>
+                </div>
+                <div class="flex items-center justify-start gap-3">
+                    <label class="text-xs text-gray-700 font-semibold">Email:</label>
+                    <p class="text-xs text-700 font-semibold">{{ driverResult.email }}</p>
+                </div>
+                <div class="flex items-center justify-start gap-3">
+                    <label class="text-xs text-gray-700 font-semibold">Localisation:</label>
+                    <p class="text-xs text-700 font-semibold">{{ driverResult.location }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if (!isLoading()) {
         <div class="w-full flex items-start justify-start flex-wrap gap-4" *ngIf="driversList().length > 0; else noDriver">
             @for (d of driversList(); track d.id) {

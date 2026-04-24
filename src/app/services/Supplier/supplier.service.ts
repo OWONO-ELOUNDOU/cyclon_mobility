@@ -51,8 +51,29 @@ export class SupplierService {
     })
   }
 
+  // Requête pour récupérer les détails d'un conducteur
   getDriverDetails(id: number): Observable<SupplierResponse> {
     return this.http.get<SupplierResponse>(`${environment.apiUrl}${this.endpoint}/${id}`, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${this.currentUser.access_token}`
+      }
+    })
+  }
+
+  // Requête pour récupérer un conducteur par email
+  getDriverByEmail(email: string): Observable<SupplierResponse> {
+    return this.http.get<SupplierResponse>(`${environment.apiUrl}${this.endpoint}/by-email/${email}`, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${this.currentUser.access_token}`
+      }
+    })
+  }
+
+  // Requête pour récupérer un conducteur par numéro de téléphone
+  getDriverByPhone(phone: string): Observable<SupplierResponse> {
+    return this.http.get<SupplierResponse>(`${environment.apiUrl}${this.endpoint}/by-phone/${phone}`, {
       headers: {
         'content-type': 'application/json',
         'Authorization': `Bearer ${this.currentUser.access_token}`

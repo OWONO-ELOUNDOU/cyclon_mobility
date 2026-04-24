@@ -1,0 +1,4 @@
+<div class="badget w-[150px] flex items-center justify-start gap-2 bg-white shadow-sm rounded-full" style="padding: 7px;">
+    <div [ngClass]="tagType()" class="tag w-[30px] h-[30px] flex items-center justify-center text-sm font-semibold rounded-full">{{ count() }}</div>
+    <p [ngClass]="tagType()" class="count text-xs text-gray-600 font-semibold">{{ tagText() }}</p>
+</div>
