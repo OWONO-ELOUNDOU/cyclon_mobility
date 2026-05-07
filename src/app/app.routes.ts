@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './Pages/Authentification/login/login.component';
+import { FullComponent } from './Layout/full/full.component';
+import { BlankComponent } from './Layout/blank/blank.component';
 import { authGuard } from './guards/Auth/auth.guard';
 
 export const routes: Routes = [
@@ -7,10 +9,6 @@ export const routes: Routes = [
     {
         path: 'login',
         loadComponent: () => import('./Pages/Authentification/login/login.component').then(c => c.LoginComponent)
-    },
-    {
-        path: 'register',
-        loadComponent: () => import('./Pages/Authentification/register/register.component').then(c => c.RegisterComponent)
     },
     {
         path: 'dashboard',

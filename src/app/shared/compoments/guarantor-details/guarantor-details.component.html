@@ -5,13 +5,34 @@
 
     <div class="w-full flex items-center justify-between" style="padding: 0 10px;">
         <h1 class="text-2xl font-semibold" style="margin-bottom: 30px; color: #0c5460;">Détails du garant</h1>
-        <button
-            class="w-[150px] text-xs text-blue-600 font-semibold bg-white border border-blue-300 shadow-sm rounded-md cursor-pointer"
-            style="padding: 7px 0;"
-            (click)="navigateTo('guarantor/form')"
-        >
-            Modifier
-        </button>
+
+        <div class="flex items-center justify-center gap-4">
+            <button
+                class="w-[150px] flex items-center justify-center gap-2 text-xs text-blue-600 font-semibold bg-white border border-blue-300 shadow-sm rounded-md cursor-pointer"
+                style="padding: 7px 0;"
+                (click)="navigateTo('guarantor/form')"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen-icon lucide-pen">
+                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                </svg>
+                Modifier
+            </button>
+
+            <button
+                class="w-[150px] flex items-center justify-center gap-2 text-xs text-red-600 font-semibold bg-white border border-red-300 shadow-sm rounded-md cursor-pointer"
+                style="padding: 7px 0;"
+                (click)="onDelete(guarantorDetailsInfo()?.id)"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2">
+                    <path d="M10 11v6"/>
+                    <path d="M14 11v6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+                    <path d="M3 6h18"/>
+                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                </svg>
+                Supprimer
+            </button>
+        </div>
     </div>
 
     <div class="w-[450px]" *ngIf="hasMessage()" style="margin-top: 20px;">

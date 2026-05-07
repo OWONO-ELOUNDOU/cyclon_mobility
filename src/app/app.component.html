@@ -1,10 +1,15 @@
 <div class="main-container w-screen h-screen flex items-start justify-start bg-white shadow-sm gap-3">
+    <!--
     <ng-container *ngIf="!isAuthorizeRoute()">
         <div class="sidebar h-full">
             <app-sidebar />
         </div>
     </ng-container>
-    <div class="main-content h-full rounded-md">
+    -->
+    <div [ngClass]="isAuthorizeRoute() ? 'hidden' : ''" class="sidebar h-full">
+        <app-sidebar />
+    </div>
+    <div [ngClass]="isAuthorizeRoute() ? 'full-view' : ''" class="main-content h-full rounded-md">
         <router-outlet />
     </div>
 </div>

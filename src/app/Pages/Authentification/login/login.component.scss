@@ -4,4 +4,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(to bottom, transparent, white), url("/images/background5.webp") center no-repeat;
+    background-size: cover;
+    position: relative;
+
+    .tag {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+
+        .logo {
+            color: white;
+            background: linear-gradient(to right, darkblue, orange);
+        }
+    }
+
+    .login-content {
+        text-align: center;
+        color: #0c5460;
+        background-color: #e5e5e54f;
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+    }
 }

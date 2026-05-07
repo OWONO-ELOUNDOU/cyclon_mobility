@@ -5,18 +5,11 @@ $sidebar-width: 220px;
 
     .sidebar {
         width: $sidebar-width;
-
-        &.hidden { display: none; }
     }
     .main-content {
         width: calc(100% - $sidebar-width);
         padding: 30px 0;
         overflow-y: auto;
         scrollbar-width: none;
-
-        &.full-view {
-            width: 100%;
-            padding: 0;
-        }
     }
 }

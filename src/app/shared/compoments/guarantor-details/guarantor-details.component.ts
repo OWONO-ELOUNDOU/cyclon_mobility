@@ -23,6 +23,7 @@ export class GuarantorDetailsComponent implements OnInit {
   imagePreview = signal<string>('');
   isLoading = signal<boolean>(false);
   hasMessage = signal<boolean>(false);
+  isDeleting = signal<boolean>(false);
   isUploading = signal<boolean>(false);
   selectedImage = signal<File | null>(null);
   guarantorDetailsInfo = signal<Guarantor | null>(null);
@@ -99,7 +100,31 @@ export class GuarantorDetailsComponent implements OnInit {
     }
   }
 
-  showMessage(state: string, message: string) {
+  onDelete(id: any) {
+    this.isDeleting.set(false);
+
+    try {
+      this.guarantorService.deleteGuarantor(id).subscribe({
+        next: (response) => {
+          this.isDeleting.set(false);
+          console.log(response);
+          this.showMessage('success', 'La garant a été supprimé');
+          this.navigateTo('guarantors');
+        },
+        error: (err) => {
+          this.isDeleting.set(false);
+          console.log(err.message);
+          this.showMessage('error', 'Erreur lors de la suppression du garant');
+        }
+      })
+    } catch (error) {
+      this.isDeleting.set(false);
+      console.log(error);
+      this.showMessage('error', 'Une erreur est survenue veuillez réessayer plutard');
+    }
+  }
+
+  showMessage(state: 'success' | 'error' | 'info', message: string) {
     this.hasMessage.set(true);
     this.state.set(state);
     this.message.set(message);

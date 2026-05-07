@@ -61,7 +61,7 @@ export class GuarantorFormComponent implements OnInit {
 
   // Vérifier le mode d'édition
   checkMode() {
-    this.garantor = JSON.parse(localStorage.getItem('garantorInfo') || '{}');
+    this.garantor = JSON.parse(localStorage.getItem('garantorInfo') || '');
     if(this.garantor) {
       this.currentMode.set('edit');
       console.log(this.currentMode());
@@ -117,6 +117,8 @@ export class GuarantorFormComponent implements OnInit {
 
   // Modification des informations d'un garant
   updateGarantor() {
+    this.guarantorForm.patchValue({ driver_id: this.garantor.driver.id });
+    console.log('update garantor form: ', this.guarantorForm.value);
     this.isLoading.set(true);
 
     try {

@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, Validators, FormGroup, FormControl } from '@angular/forms';
 
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+import { ToastMessageComponent } from '../../../shared/compoments/toast-message/toast-message.component';
 
 import { AuthenticationService } from '../../../services/Authentication/authentication.service';
-import { ButtonDirective } from "primeng/button";
+
+interface LoginError {
+  error: string;
+  message: string;
+  statusCode: number;
+}
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToastMessageComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -19,7 +23,10 @@ export class LoginComponent {
   private router = inject(Router);
   private authService = inject(AuthenticationService);
 
+  message = signal<string>('');
   isLoading = signal<boolean>(false);
+  hasMessage = signal<boolean>(false);
+  state = signal<'success' | 'info' | 'error'>('success');
 
   loginForm: FormGroup = new FormGroup({
     phone: new FormControl('', Validators.required),
@@ -48,11 +55,13 @@ export class LoginComponent {
           error: (error) => {
             this.isLoading.set(false);
             console.log(error.message);
+            this.showMessage('error', `${error.error.error}, ${error.error.message}`);
           }
         })
       } catch (error) {
         this.isLoading.set(false);
         console.log(error);
+        this.showMessage('error', `une erreur est survenue`)
       }
     } else {
       this.markFormGroupTouched(this.loginForm);
@@ -68,5 +77,12 @@ export class LoginComponent {
         this.markFormGroupTouched(control);
       }
     });
+  }
+
+  showMessage(type: 'success' | 'info' | 'error', details: string) {
+    this.hasMessage.set(true);
+    this.state.set(type);
+    this.message.set(details);
+    setTimeout(() => { this.hasMessage.set(false) }, 3000);
   }
 }

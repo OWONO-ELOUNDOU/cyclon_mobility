@@ -22,7 +22,7 @@ export interface Supplier {
     isDriverValidatedTest: boolean;
     isDriverVerification: boolean;
     profilePicture: string;
-    carTypeId?: number;
+    carTypeId: number;
     createdById?: number;
     verifiedById?: number;
     testedById?: number;

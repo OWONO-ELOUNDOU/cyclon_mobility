@@ -3,7 +3,7 @@
         <app-navbar [pageTitle]="title()" />
     </div>
 
-    <form [formGroup]="guarantorForm" (ngSubmit)="onSubmit()" class="w-full flex items-start justify-between flex-wrap gap-1" style="padding: 0 10px;">
+    <form [formGroup]="guarantorForm" (ngSubmit)="createGarantor()" class="w-full flex items-start justify-between flex-wrap gap-1" style="padding: 0 10px;">
         <div class="col-1 w-2/3 flex items-center justify-center flex-col gap-4">
             <div class="input-group w-full bg-white border border-gray-300 rounded-md" style="padding: 10px;">
                 <h2 class="text-xl text-green-900 font-semibold" style="margin-bottom: 15px;">Informations Personnelles</h2>
@@ -74,7 +74,6 @@
                     Annuler
                 </button>
                 <button
-                    *ngIf="currentMode() === 'create'; else modifyButton"
                     class="w-[300px] flex items-center justify-center gap-2 text-xs text-green-600 font-semibold bg-white border-2 border-green-300 rounded-md cursor-pointer"
                 >
                     @if (isLoading()) {
@@ -97,6 +96,7 @@
                     }
                 </button>
     
+                <!--
                 <ng-template #modifyButton>
                     <button class="w-[300px] flex items-center justify-center gap-2 text-xs text-green-600 font-semibold bg-white border-2 border-green-300 rounded-md cursor-pointer">
                         @if (isLoading()) {
@@ -119,6 +119,7 @@
                         }
                     </button>
                 </ng-template>
+                -->
             </div>
         </div>
 

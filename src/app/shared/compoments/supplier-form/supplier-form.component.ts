@@ -23,10 +23,10 @@ export class SupplierFormComponent implements OnInit {
   private router = inject(Router);
   private supplierService = inject(SupplierService);
   private carTypesService = inject(CarTypesService);
-
-  carTypes = signal<CarType[]>([]);
+  
   hasCNI = signal<string>('');
   hasLicence = signal<string>('');
+  carTypes = signal<CarType[]>([]);
   hasGuarantor = signal<string>('');
   hasWithdrawal = signal<string>('');
   isLoading = signal<boolean>(false);
@@ -39,10 +39,11 @@ export class SupplierFormComponent implements OnInit {
     haveCni: new FormControl(false),
     cniNumber: new FormControl(''),
     cniExpireDate: new FormControl(''),
+    carTypeId: new FormControl(0),
     haveDriverLicence: new FormControl(''),
     //haveGuarantor: new FormControl(false),
     driverLicenceDebit: new FormControl(false),
-    driverLicenceExpireDate: new FormControl('2028-06-30'),
+    driverLicenceExpireDate: new FormControl(''),
     adress: new FormControl(''),
     email: new FormControl(''),
     phone: new FormControl(''),
@@ -54,18 +55,20 @@ export class SupplierFormComponent implements OnInit {
     isDriverValidatedTest: new FormControl(false),
     isDriverVerification: new FormControl(false),
     profilePicture: new FormControl(''),
+    
   });
 
   constructor() {}
 
   ngOnInit(): void {
-    //this.fetchCarTypes();
+    this.fetchCarTypes();
   }
 
   get f() {
     return this.driverForm.controls;
   }
 
+  // Fonction pour affichage des types de véhicules
   private fetchCarTypes() {
     this.isFetching.set(true);
 
