@@ -31,12 +31,18 @@ export class GuarantorDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.clearSavedGarantorInfo();
     const id = localStorage.getItem('garantId');
     if (id) {
       this.loadGuarantorDetailsInfo(+id);
     } else {
       this.showMessage('error', 'Aucun ID de garant fourni.');
     }
+  }
+
+  // Fonction pour supprimer les info du garant sauvegarder
+  clearSavedGarantorInfo() {
+    localStorage.removeItem('garantorInfo');
   }
 
   loadGuarantorDetailsInfo(id: number) {

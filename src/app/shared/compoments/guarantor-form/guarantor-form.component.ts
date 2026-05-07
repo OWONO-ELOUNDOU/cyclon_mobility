@@ -23,7 +23,7 @@ export class GuarantorFormComponent implements OnInit {
   // Déclaration de variables
   garantor!: Guarantor;
   driverId = signal<number>(0);
-  currentMode = signal<string>('');
+  currentMode = signal<string>('create');
   title = signal<string>('Garant');
 
   // Gestion du chargement et affichage des messages d'erreur
