@@ -3,10 +3,15 @@
 
     .search {
         div > .search-options {
-            #email-option:hover {
-                color: white;
-                background-color: black;
+
+            #email-option, #phone-option {
+                &.selected {
+                    color: white;
+                    background-color: black;
+                    transition: all 0.3s ease-in;
+                }
             }
+
         }
     }
 }
